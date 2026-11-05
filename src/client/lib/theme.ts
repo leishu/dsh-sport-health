@@ -27,6 +27,9 @@ export const RISK_TONE: Record<string, string> = {
 
 export const RISK_TEXT: Record<string, string> = {
   HIGH_RISK: '高风险', MODERATE_RISK: '中等风险', LOW_RISK: '低风险',
+  // 服务端也可能回不带 `_RISK` 后缀的值；`RISK_TONE` 已经两种都认，
+  // 文案这边不补齐就会在标签上漏出英文枚举。
+  HIGH: '高风险', MODERATE: '中等风险', LOW: '低风险',
 }
 
 export const TYPE_TONE: Record<string, string> = {

@@ -181,8 +181,9 @@ export class McpHttpClient {
 
   private shouldRetry(error: unknown): boolean {
     if (!(error instanceof McpHttpError)) return false
+    // 400 通常是参数/schema 错误，重试只会多打一次（还会顺手清掉 session 与
+    // 缓存再重建），对 reload_data 这类有副作用的工具尤其不能这么做。
     if (error.status === 404 || error.status === 408 || error.status === 429) return true
-    if (error.status === 400) return true
     return /session|expired|initialized|not initialized/i.test(error.message)
   }
 }
@@ -211,9 +212,15 @@ function decodeResponse(text: string, contentType: string, requestId: number | s
       if (line.startsWith('data:')) data.push(line.slice(5).replace(/^ /, ''))
     }
     flush()
-    return messages.find(message => message.id === requestId)
-      ?? messages.filter(message => message.result !== undefined || message.error !== undefined).at(-1)
-      ?? messages.at(-1)
+    // 有 id 的请求必须严格按 id 匹配：通知和其它请求的结果会混在同一条流里，
+    // 兜底取「最后一条带 result 的消息」可能把别人的结果当成本次的。
+    const matched = messages.find(message => message.id === requestId)
+    if (matched) return matched
+    const hasResponseId = messages.some(message => message.id !== undefined && message.id !== null)
+    if (hasResponseId) {
+      throw new McpHttpError(`MCP 响应中没有与请求 id=${String(requestId)} 匹配的消息`)
+    }
+    return messages.find(message => message.result !== undefined || message.error !== undefined) ?? messages.at(-1)
   }
 
   try {
@@ -248,8 +255,25 @@ function decodeToolResult(toolName: string, result: any): unknown {
   }
 }
 
+/**
+ * Deterministic cache key for tool arguments.
+ *
+ * `JSON.stringify(undefined)` returns `undefined` (not a string), so values the
+ * JSON serializer cannot express must be tagged explicitly — otherwise
+ * `undefined`, `NaN`, `Infinity` and `-0` all collapse into the same key and two
+ * different calls can share a cached result.
+ */
 function stableKey(value: unknown): string {
-  if (value === null || typeof value !== 'object') return JSON.stringify(value)
+  if (value === null) return 'null'
+  if (typeof value === 'string') return JSON.stringify(value)
+  if (typeof value === 'number') {
+    if (Number.isNaN(value)) return '"#NaN"'
+    if (!Number.isFinite(value)) return value > 0 ? '"#Infinity"' : '"-Infinity"'
+    if (Object.is(value, -0)) return '0'
+    return String(value)
+  }
+  if (typeof value === 'boolean') return String(value)
+  if (typeof value !== 'object') return JSON.stringify(`#${typeof value}`)
   if (Array.isArray(value)) return `[${value.map(stableKey).join(',')}]`
   const record = value as Record<string, unknown>
   return `{${Object.keys(record).sort().map(key => `${JSON.stringify(key)}:${stableKey(record[key])}`).join(',')}}`

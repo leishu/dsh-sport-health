@@ -21,7 +21,7 @@ import { createApp, h, reactive, type App, type Component } from 'vue'
 import { ElConfigProvider } from 'element-plus/es/components/config-provider/index.mjs'
 import 'element-plus/es/components/config-provider/style/css.mjs'
 import zhCn from 'element-plus/es/locale/lang/zh-cn.mjs'
-import { ensureThemeVars } from '../lib/theme.ts'
+import { ensureThemeVars } from './theme.ts'
 
 /** 桥接层实际用到的那部分 React API。 */
 export interface ReactRuntime {
@@ -106,7 +106,7 @@ export function resolveReact(): ReactRuntime {
  * 把 Vue 组件包装成 React 组件，供 `slots.register()` 使用。
  *
  * 每次 React 渲染都会调用返回的函数，但 Vue app 只在挂载时创建一次
- * （`useEffect` 空依赖），后续 props 变化只写 reactive 对象。
+ * （`useEffect` 空依赖），后续 props 变化在**提交阶段**同步进 reactive 对象。
  */
 export function createSlotComponent<Props extends Record<string, unknown>>(
   component: Component,
@@ -118,13 +118,37 @@ export function createSlotComponent<Props extends Record<string, unknown>>(
     // 桥接容器：由 React 创建并持有，内部归 Vue 管。
     const containerRef = React.useRef<HTMLDivElement | null>(null)
     const propsRef = React.useRef<Record<string, unknown> | null>(null)
+    const latestProps = React.useRef<Record<string, unknown>>(props)
+    const mounted = React.useRef(false)
     if (propsRef.current === null) propsRef.current = reactive<Record<string, unknown>>({ ...initial })
+
+    /**
+     * 把 owner props 写进 Vue 侧的 reactive 对象。
+     *
+     * `replace` 为真时（挂载）只保留 `initial` 与本次 props 的交集：owner 传
+     * `undefined` 的属性等于没传，留在对象里会盖掉子组件自己的 default。
+     * 之后的增量同步同样会清理掉「上一轮有、这一轮没了」的键，避免残留旧值。
+     */
+    function syncProps(next: Record<string, unknown>, replace: boolean): void {
+      const target = propsRef.current!
+      const keys = replace ? Object.keys(next).filter(key => next[key] !== undefined) : Object.keys(next)
+      for (const key of Object.keys(target)) {
+        if (keys.includes(key)) continue
+        if (replace || !(key in initial)) delete target[key]
+      }
+      for (const key of keys) target[key] = next[key]
+    }
 
     React.useEffect(() => {
       const container = containerRef.current
       if (!container) return
 
       ensureThemeVars()
+
+      // 挂载那一刻 props 的权威值：同步发生在提交阶段（见下方 useEffect），
+      // 渲染期只把值写进这个非响应式快照，不碰 reactive 对象。
+      syncProps(latestProps.current, true)
+      mounted.current = true
 
       const app: App = createApp({
         render: () => h(
@@ -136,13 +160,17 @@ export function createSlotComponent<Props extends Record<string, unknown>>(
       app.mount(container)
 
       return () => {
+        mounted.current = false
         app.unmount()
       }
     }, [])
 
-    // owner props 每次 React 渲染都会来（工具阶段 start → result、切换会话），
-    // 在渲染期写入，Vue 侧下一帧即生效，避免多跑一轮 React 更新。
-    Object.assign(propsRef.current, props)
+    // owner props 每次 React 渲染都会来（工具阶段 start → result、切换会话）。
+    // 渲染期写 reactive 对象属于渲染期副作用，这里只记快照，提交后再同步。
+    latestProps.current = props
+    React.useEffect(() => {
+      if (mounted.current) syncProps(latestProps.current, false)
+    })
 
     return React.createElement('div', {
       ref: containerRef,

@@ -5,7 +5,7 @@
  * them from `document` once mounted, and re-reads them whenever the theme
  * provider bumps the shared key or the root `data-theme` attribute changes.
  */
-import { computed, inject, onMounted, ref, type ComputedRef } from 'vue'
+import { computed, inject, onBeforeUnmount, onMounted, ref, watch, type ComputedRef } from 'vue'
 import { FALLBACK_COLORS, type ThemeColors } from './charts.ts'
 
 function sampler(): Element | null {
@@ -34,8 +34,14 @@ export function useEChartColors(): ComputedRef<ThemeColors> {
   const colors = ref<ThemeColors>(FALLBACK_COLORS)
   const sample = () => { colors.value = readColors() }
   onMounted(sample)
-  return computed(() => {
-    void themeKey.value
-    return typeof document === 'undefined' ? FALLBACK_COLORS : (colors.value = readColors())
-  })
+  // 只在 themeKey 变化（或根元素 data-theme 变化）时采样，把副作用留在
+  // getter 外面 —— computed 里写 ref 会触发 Vue 的「副作用在渲染流程中」
+  // 警告，而且依赖链很难推理。
+  if (typeof MutationObserver !== 'undefined' && typeof document !== 'undefined') {
+    const observer = new MutationObserver(sample)
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'class'] })
+    onBeforeUnmount(() => observer.disconnect())
+  }
+  watch(themeKey, sample)
+  return computed(() => colors.value)
 }

@@ -89,7 +89,6 @@ const option = computed<EChartsOption>(() => {
     :option="option"
     :height="height"
     empty-text="暂无训练日历"
-    aria-label="训练日历热力图"
   />
   <div v-else class="sh-chart__empty" style="position: static; height: 80px">暂无训练日历</div>
 </template>

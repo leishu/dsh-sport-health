@@ -248,6 +248,36 @@ function placeElement(element, parent) {
 
 const fixtures = readdirSync(join(root, 'tests/fixtures')).filter(file => file.startsWith('sport-'))
 
+/**
+ * 每个 toolview 至少要断言到 fixture 里的一个真实值。
+ *
+ * 只断言 `html.length >= 100` 是假阳性温床：字段改名（`periods` → `buckets`）
+ * 不会让任何用例失败，卡片会静默退化成「—」和空图表。这里的探针直接来自
+ * fixture 中的数字/文案，视图没接上数据就会立刻红。
+ */
+const TOOLVIEW_PROBES = {
+  classify_run: ['轻松跑', '坡度修正配速'],
+  compare_runs: ['基准跑', '对比跑'],
+  describe_data_source: ['数据目录', '源文件'],
+  get_best_efforts: ['各距离最佳成绩'],
+  get_consistency: ['活跃天数', '最长连续'],
+  get_daily_running: ['距离分布', '配速趋势'],
+  get_elevation_profile: ['海拔剖面', '分段爬升'],
+  get_personal_bests: ['最长距离', '最快配速'],
+  get_run_detail: ['轨迹点', '海拔范围'],
+  get_run_route: ['起点', '终点'],
+  get_run_splits: ['分段配速', '坡度修正'],
+  get_running_summary: ['总距离', '平均配速'],
+  get_stop_points: ['停留次数'],
+  get_training_load: ['ACWR 负荷比', '负荷明细'],
+  get_training_mix: ['距离构成'],
+  get_training_trend: ['跑量趋势', '环比变化'],
+  get_weather_impact: ['温度对配速的影响'],
+  list_runs: ['单次距离', '跑步明细'],
+  predict_race_time: ['预测成绩'],
+  reload_data: ['记录数', '扫描文件'],
+}
+
 for (const file of fixtures) {
   const raw = file.replace(/^sport-/, '').replace(/\.json$/, '')
   const payload = JSON.parse(readFileSync(join(root, 'tests/fixtures', file), 'utf8'))
@@ -259,6 +289,12 @@ for (const file of fixtures) {
     await flush()
     const html = element?.innerHTML ?? ''
     if (html.length < 100) throw new Error(`suspiciously short output (${html.length} chars)`)
+    const probes = TOOLVIEW_PROBES[raw]
+    if (!probes) throw new Error(`no render probe declared for ${raw}`)
+    for (const probe of probes) {
+      if (!html.includes(probe)) throw new Error(`missing "${probe}" — view likely dropped its data`)
+    }
+    if (html.includes('无法解析工具返回内容')) throw new Error('payload was not parsed')
     instance.destroy()
   })
 }
@@ -276,8 +312,29 @@ await check('error state', async () => {
     isError: true,
   })
   await flush()
-  const html = element?.innerHTML ?? ''
-  if (!html.includes('失败') || !html.includes('server exploded')) throw new Error('error state missing')
+  // 断言真实的 Element Plus 元素，而不是 innerHTML 子串：旧断言命中的是未解析
+  // 组件的 description 属性值，`ElAlert` 漏 import 时依然绿着通过。
+  const alert = element.querySelector('.el-alert')
+  if (!alert) throw new Error('failed card must render an ElAlert')
+  if (alert.classList.contains('el-alert--warning')) throw new Error('failure must use the error alert, not the warning one')
+  const text = alert.textContent ?? ''
+  if (!text.includes('工具调用失败') || !text.includes('server exploded')) {
+    throw new Error(`error alert text incomplete: ${text.slice(0, 120)}`)
+  }
+  if (!(element.textContent ?? '').includes('失败')) throw new Error('failure badge missing')
+  if (element.querySelector('.sh-raw')) throw new Error('failed card must not show the raw-data panel')
+  instance.destroy()
+})
+
+await check('unparseable result shows the warning state', async () => {
+  const { instance, element } = mountTool('mcp__sport_health__list_runs', {
+    content: [{ type: 'text', text: 'not json at all' }],
+    isError: false,
+  })
+  await flush()
+  const alert = element.querySelector('.el-alert')
+  if (!alert) throw new Error('unparseable card must render an ElAlert')
+  if (!(alert.textContent ?? '').includes('无法解析工具返回内容')) throw new Error('warning alert text missing')
   instance.destroy()
 })
 
@@ -361,6 +418,34 @@ await check('empty dashboard sections explain themselves', async () => {
   } finally {
     serveOverview(overview)
   }
+})
+
+await check('dashboard KPI tiles follow a refresh', async () => {
+  // 回归护栏：ShKpi 曾经用 `const kpis = props.items ?? []` 快照 props，
+  // 刷新后图表更新而 KPI 瓦片停在旧值。用两份不同的汇总端点同一组瓦片。
+  const shifted = {
+    ...overview,
+    summary: { ...overview.summary, summary: { ...(overview.summary.summary ?? overview.summary), totalDistanceKm: 123.45 } },
+  }
+
+  serveOverview(overview)
+  const first = renderReact(dashboard, {})
+  await flush()
+  const firstText = first.element.textContent ?? ''
+  // 与实际渲染一致：KPI 走 `fmt()`（lib/format.ts），45.54 km 会显示成 45.5。
+  const fmt = value => String(Math.round(value * 10) / 10)
+  const initial = overview.summary.summary ?? overview.summary
+  if (!firstText.includes(fmt(initial.totalDistanceKm))) {
+    throw new Error(`initial KPI value missing (${fmt(initial.totalDistanceKm)})`)
+  }
+  first.destroy()
+
+  serveOverview(shifted)
+  const second = renderReact(dashboard, {})
+  await flush()
+  if (!(second.element.textContent ?? '').includes(fmt(123.456))) throw new Error('KPI tile did not pick up the refreshed data')
+  second.destroy()
+  serveOverview(overview)
 })
 
 await check('slot entries are React components', async () => {

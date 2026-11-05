@@ -167,7 +167,9 @@ const mixTotal = computed(() => mixTypes.value.reduce((sum, type) => sum + (type
 /* ── get_consistency ───────────────────────────────────────────────────── */
 
 const consistencyDays = computed<any[]>(() => (Array.isArray(d.value.days) ? d.value.days : []))
-const [rangeFrom, rangeTo] = splitRange(range.value)
+/** 两个 computed 而不是在 setup 里解构 `splitRange(range.value)`，否则换结果后区间不更新。 */
+const rangeFrom = computed(() => splitRange(range.value)[0])
+const rangeTo = computed(() => splitRange(range.value)[1])
 
 /* ── get_personal_bests ────────────────────────────────────────────────── */
 

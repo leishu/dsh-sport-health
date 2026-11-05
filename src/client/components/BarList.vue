@@ -37,5 +37,5 @@ const option = computed(() => barOption(data.value, colors.value, {
 </script>
 
 <template>
-  <EChart :option="option" :height="height" :empty="items.length === 0" aria-label="对比条形图" />
+  <EChart :option="option" :height="height" :empty="items.length === 0" />
 </template>

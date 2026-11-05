@@ -253,8 +253,3 @@ export function gaugeOption(
     }],
   }
 }
-
-/** Heikin-style barrel for average pace per split: lower is faster. */
-export function paceBarOption(splits: Array<{ label: string; value: number | null; color?: string }>, colors: ThemeColors): EChartsOption {
-  return barOption(splits, colors, { format: v => `${Math.floor(v / 60)}'${String(Math.round(v % 60)).padStart(2, '0')}"` })
-}

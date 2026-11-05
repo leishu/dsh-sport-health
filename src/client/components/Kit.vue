@@ -37,6 +37,8 @@ export const ShPanel = defineComponent({
 </script>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+
 interface KpiItem {
   label: string
   value?: string | number
@@ -55,7 +57,8 @@ const props = defineProps<{
 }>()
 
 const dense = (value?: string | number) => String(value ?? '').length > 11
-const kpis = props.items ?? []
+/** 必须保持响应式：看板刷新后 `items` 会换一个新数组，非响应式快照会停在旧值。 */
+const kpis = computed(() => props.items ?? [])
 </script>
 
 <template>

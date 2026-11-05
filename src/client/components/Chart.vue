@@ -22,6 +22,8 @@ const props = withDefaults(defineProps<{
   max?: number
   label?: string
   kind?: 'line' | 'bar' | 'donut' | 'gauge'
+  /** Bar charts only: draw bars along the category axis (legible long labels). */
+  horizontal?: boolean
   emptyText?: string
 }>(), {
   data: () => [],
@@ -37,6 +39,7 @@ const props = withDefaults(defineProps<{
   max: 2.5,
   label: '',
   kind: 'bar',
+  horizontal: false,
   emptyText: '暂无数据',
   format: undefined,
 })
@@ -58,7 +61,13 @@ const option = computed(() => {
     case 'gauge':
       return gaugeOption(props.value, colors.value, { max: props.max, label: props.label })
     default:
-      return barOption(props.data, colors.value, { color: props.color, unit: props.unit, format: format.value, showValues: props.showValues })
+      return barOption(props.data, colors.value, {
+        color: props.color,
+        unit: props.unit,
+        format: format.value,
+        showValues: props.showValues,
+        horizontal: props.horizontal,
+      })
   }
 })
 </script>

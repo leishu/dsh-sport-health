@@ -88,7 +88,7 @@ const option = computed<EChartsOption>(() => {
 
 <template>
   <div class="sh-route" :style="{ height: `${height}px` }">
-    <EChart v-if="valid.length >= 2" :option="option" :height="height" aria-label="GPS 轨迹" />
+    <EChart v-if="valid.length >= 2" :option="option" :height="height" />
     <div v-else class="sh-chart__empty" style="position: static; height: 100%">没有可绘制的 GPS 轨迹</div>
   </div>
 </template>

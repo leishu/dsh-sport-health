@@ -17,5 +17,9 @@
     "types": ["node"]
   },
   "include": ["src/**/*.ts", "src/**/*.vue", "src/**/*.d.ts", "env.d.ts", "vite.config.ts"],
+  "vueCompilerOptions": {
+    "strictTemplates": true,
+    "dataAttributes": ["data-theme"]
+  },
   "exclude": ["node_modules", "lib"]
 }

@@ -8,13 +8,12 @@
  *   a headless test environment), so cards never render blank.
  */
 <script setup lang="ts">
-import { computed, inject, onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vue'
+import { computed, inject, nextTick, onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vue'
 import * as echarts from 'echarts/core'
 import { BarChart, GaugeChart, LineChart, PieChart } from 'echarts/charts'
 import { GridComponent, TitleComponent, TooltipComponent } from 'echarts/components'
 import { CanvasRenderer } from 'echarts/renderers'
 import type { ECharts, EChartsOption } from 'echarts'
-import { FALLBACK_COLORS, type ThemeColors } from '../lib/charts.ts'
 
 echarts.use([BarChart, GaugeChart, LineChart, PieChart, GridComponent, TitleComponent, TooltipComponent, CanvasRenderer])
 
@@ -36,22 +35,6 @@ const failed = ref(false)
 /** Bumped by the theme provider so charts rebuild with the new palette. */
 const themeKey = inject<{ value: number }>('sh-theme-key', { value: 0 })
 
-const readColors = (): ThemeColors => {
-  const el = host.value
-  if (!el || typeof getComputedStyle !== 'function') return FALLBACK_COLORS
-  const style = getComputedStyle(el)
-  const read = (name: string, fallback: string) => style.getPropertyValue(name).trim() || fallback
-  return {
-    text: read('--sh-muted', FALLBACK_COLORS.text),
-    faint: read('--sh-faint', FALLBACK_COLORS.faint),
-    line: read('--sh-line', FALLBACK_COLORS.line),
-    surface: read('--sh-surface-strong', FALLBACK_COLORS.surface),
-    background: 'transparent',
-    tooltipBg: read('--el-bg-color-overlay', FALLBACK_COLORS.tooltipBg),
-    tooltipBorder: read('--el-border-color-light', FALLBACK_COLORS.tooltipBorder),
-  }
-}
-
 /** Options are built by callers with a colour object; re-read it on theme change. */
 function render(): void {
   if (!chart.value) return
@@ -59,8 +42,15 @@ function render(): void {
   chart.value.resize()
 }
 
+/**
+ * Idempotent: safe to call again after the chart went from empty to non-empty.
+ *
+ * 旧实现在 `props.empty` 时直接 return，而 `render()` 又靠 `chart.value`
+ * 守卫，于是「先空后有」的图表（数据晚一步到、结果被替换）会彻底空白 ——
+ * `showEmpty` 变 false 后容器是可见的，但里面从来没有实例。
+ */
 function mount(): void {
-  if (!host.value || props.empty) return
+  if (!host.value || props.empty || chart.value || failed.value) return
   try {
     chart.value = echarts.init(host.value, undefined, { renderer: 'canvas' })
     chart.value.setOption(props.option, { notMerge: true })
@@ -96,6 +86,8 @@ onBeforeUnmount(() => {
 watch(() => props.option, render, { deep: false })
 watch(themeKey, render)
 watch(() => props.height, () => chart.value?.resize())
+/** 空 → 有数据：容器此前是 `v-show` 隐藏的，实例必须在变得可见之后补建。 */
+watch(() => props.empty, empty => { if (!empty) nextTick(mount) })
 
 const showEmpty = computed(() => props.empty || failed.value)
 const style = computed(() => ({ height: `${props.height}px` }))

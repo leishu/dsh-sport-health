@@ -7,7 +7,7 @@
  */
 <script setup lang="ts">
 import { computed } from 'vue'
-import { ElCollapse, ElCollapseItem, ElTag } from './element.ts'
+import { ElAlert, ElCollapse, ElCollapseItem, ElTag } from './element.ts'
 import ThemeProvider from './ThemeProvider.vue'
 import ToolViews from './ToolViews.vue'
 import { C, tagType } from '../lib/theme.ts'
@@ -26,12 +26,35 @@ const parsed = computed(() => (props.phase === 'result' ? parsePayload(props.blo
 const payload = computed(() => parsed.value.value)
 const failed = computed(() => Boolean(props.block?.isError))
 const pending = computed(() => props.phase !== 'result')
+/**
+ * 失败态的判定要优先于 `payload`。
+ *
+ * 服务端报错时通常也会带回一个 JSON（`{"error": "..."}`），旧模板里
+ * `v-else-if="payload === undefined"` 让失败分支排在前面还行，但下面
+ * 「原始数据」折叠面板只看 `payload !== undefined`，于是失败态又多出一块
+ * 看起来像正常结果的原始 JSON。这里统一成 `showViews`，失败时不出图表视图。
+ */
+const showViews = computed(() => !failed.value && payload.value !== undefined)
+/**
+ * 副标题只跟 payload 有关，不受失败态影响：失败时更需要知道是哪次跑步/哪个区间。
+ */
 const subtitle = computed(() => (payload.value === undefined ? undefined : subtitleFor(name.value, payload.value)))
 const status = computed(() => ({
   text: failed.value ? '失败' : pending.value ? '调用中' : '完成',
   tone: failed.value ? C.red : pending.value ? C.amber : C.green,
 }))
-const raw = computed(() => (payload.value === undefined ? rawText(parsed.value.text) : JSON.stringify(payload.value, null, 2)))
+/** 折叠面板只在 `showViews` 时渲染，所以到这里 payload 必然是已解析的 JSON。 */
+const raw = computed(() => JSON.stringify(payload.value, null, 2))
+/**
+ * 失败态的原始内容由告警正文承载。
+ *
+ * 失败时不渲染「原始数据」折叠面板 —— 那会让报错和正常结果长得一样；但错误
+ * 原样仍是排查的唯一线索，所以能解析成 JSON 就格式化后放进 description
+ * （`.el-alert__description` 已是 `white-space: pre-wrap`，换行不会被吞）。
+ */
+const failureText = computed(() => (payload.value === undefined
+  ? rawText(parsed.value.text)
+  : JSON.stringify(payload.value, null, 2)))
 
 function rawText(text?: string): string {
   return text === undefined || text === '' ? '（无内容）' : text
@@ -59,7 +82,7 @@ function rawText(text?: string): string {
         :closable="false"
         show-icon
         title="工具调用失败"
-        :description="parsed.text || '未知错误'"
+        :description="failureText"
       />
       <ElAlert
         v-else-if="payload === undefined"
@@ -71,7 +94,7 @@ function rawText(text?: string): string {
       />
       <ToolViews v-else :d="payload" :tool="name" />
 
-      <ElCollapse v-if="!pending && payload !== undefined" class="sh-raw">
+      <ElCollapse v-if="showViews" class="sh-raw">
         <ElCollapseItem title="原始数据" name="raw">
           <pre>{{ raw }}</pre>
         </ElCollapseItem>

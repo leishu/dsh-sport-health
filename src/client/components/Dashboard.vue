@@ -46,14 +46,18 @@ let controller: AbortController | null = null
 
 async function load(): Promise<void> {
   controller?.abort()
-  controller = new AbortController()
+  // 本次请求自己的 controller。`finally` 里必须读这个局部变量 —— 模块级的
+  // `controller` 已被下一次调用替换，拿着它判断会让被 abort 的那次请求误以为
+  // 「没被取消」，从而把还在飞的新请求的 loading 提前关掉。
+  const current = new AbortController()
+  controller = current
   loading.value = true
   fatal.value = null
   try {
     const response = await fetch('/sport-health/api/overview', {
       method: 'GET',
       headers: { accept: 'application/json' },
-      signal: controller.signal,
+      signal: current.signal,
     })
     if (!response.ok) throw new Error(`看板接口返回 HTTP ${response.status}`)
     const next = await response.json() as Overview
@@ -61,10 +65,11 @@ async function load(): Promise<void> {
     if (next.ok === false && next.error) fatal.value = next.error
   } catch (error) {
     if ((error as any)?.name === 'AbortError') return
+    if (current.signal.aborted) return
     fatal.value = error instanceof Error ? error.message : String(error)
     data.value = null
   } finally {
-    if (!controller?.signal.aborted) loading.value = false
+    if (!current.signal.aborted) loading.value = false
   }
 }
 
@@ -74,7 +79,8 @@ onBeforeUnmount(() => controller?.abort())
 const summary = computed(() => data.value?.summary?.summary ?? data.value?.summary)
 const range = computed<string | undefined>(() => data.value?.consistency?.range
   ?? (summary.value?.from && summary.value?.to ? `${summary.value.from} ~ ${summary.value.to}` : undefined))
-const [from, to] = [computed(() => splitRange(range.value)[0]), computed(() => splitRange(range.value)[1])]
+const from = computed(() => splitRange(range.value)[0])
+const to = computed(() => splitRange(range.value)[1])
 const offline = computed(() => data.value === null || (data.value.ok === false && !data.value.summary))
 
 /**
@@ -432,7 +438,7 @@ const weatherNote = computed(() => {
             <Chart
               v-if="weatherAvailable"
               kind="bar"
-              horizontal
+              :horizontal="true"
               :data="weatherPoints"
               :format="(value: number) => fmtPaceDelta(value)"
               :height="150"
