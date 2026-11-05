@@ -65,6 +65,17 @@ function inlineStyles(id: string): Plugin {
   }
 }
 
+/**
+ * Hands the bundle body the `require` of the factory that wraps it.
+ *
+ * This is the bundle's only channel to the shell: `factory(require)` is called
+ * during materialization with the live module table, and every module body runs
+ * inside that call. By the time cordis calls `apply(ctx)` the closure is gone
+ * (`ctx` only carries injected services), so the module body has to take what
+ * it needs on the synchronous path — here, the shell's React instance.
+ */
+const REQUIRE_ALIAS = '__dsh_require__'
+
 /** Wraps the emitted UMD bundle in the DSH factory registration. */
 function dshModuleLoader(): Plugin {
   return {
@@ -77,6 +88,7 @@ function dshModuleLoader(): Plugin {
         file.code = `${banner}
   var module = { exports: {} };
   var exports = module.exports;
+  var ${REQUIRE_ALIAS} = require;
 ${file.code}
   return module.exports;
   }
@@ -131,7 +143,16 @@ export default defineConfig(({ mode }): UserConfig => {
         fileName: () => 'client.js',
       },
       rollupOptions: {
-        output: { exports: 'named' },
+        /**
+         * `react` must stay a *runtime* require of the shell's factory, not a
+         * bundled copy: the slot renderer compares element types against its own
+         * React instance. Rollup only leaves it alone if the bare `require` call
+         * is opaque, and the UMD wrapper would otherwise demand an ambient
+         * `require` global (the shell has none) — so map it to the factory's
+         * `require`, aliased above as `__dsh_require__`.
+         */
+        external: ['react'],
+        output: { exports: 'named', globals: { react: REQUIRE_ALIAS } },
       },
     },
   }

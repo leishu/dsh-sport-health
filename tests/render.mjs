@@ -65,19 +65,60 @@ const originalError = console.error
 console.warn = (...args) => { warnings.push(args.join(' ')); originalWarn(...args) }
 console.error = (...args) => { errors.push(args.join(' ')); originalError(...args) }
 
+/* ── React 桥接测试替身 ─────────────────────────────────────────────────── */
+
+/**
+ * 最小 React 运行时，契约与 shell 一致。
+ *
+ * renderer 是按 `jsx(Comp, props)` 挂载 slot 条目的 —— 组件必须**返回 React
+ * 元素**。只按旧方式 `instance.render()` 调用会绕过这条路径，正是它让
+ * 「返回 DOM 节点」的适配器一路绿灯却把看板渲染成白屏。
+ * 这里按 React 的方式派发，路径与运行时一致。
+ */
+let pendingEffects = null
+
+const reactShim = {
+  createElement(type, props, ...children) {
+    return { type, props: { ...props, children } }
+  },
+  useRef(initial) { return { current: initial } },
+  useEffect(effect) { (pendingEffects ?? []).push(effect) },
+}
+
 /* ── load the bundle exactly like the shell ────────────────────────────── */
 
+/**
+ * 真实加载是两阶段的，这里必须照抄，否则测出来的成功是假的：
+ *
+ *   1. `<script>` 求值 —— 只调 `__ModuleLoader__.load()` 注册 factory，
+ *      模块体一行都不跑（CSS 注入也在这之后）；
+ *   2. 第一次 import 时 shell 调 `factory(require)` —— 模块体全部在这里执行，
+ *      `apply` 也在这一步被定义。插件要拿宿主 React，只能在这个同步窗口里
+ *      通过 factory 的 `require` 拿（`apply(ctx)` 时 `ctx.require` 并不存在）。
+ */
 let registration
 window.__ModuleLoader__ = { load: value => { registration = value } }
 window.eval(readFileSync(join(root, 'lib/client.js'), 'utf8'))
 if (!registration) throw new Error('client bundle did not register with window.__ModuleLoader__')
 
+const requireLog = []
 const out = registration.factory(specifier => {
-  throw new Error(`bundled client should not require(${specifier}) at runtime`)
+  requireLog.push(specifier)
+  if (specifier === 'react') return reactShim
+  throw new Error(`client require("${specifier}") missed the module table`)
 })
+
+// 物化阶段已经在模块顶层（`captureShellReact()`）取过 React。
+// 少走这一步 → 插件能加载、能注册，但一渲染就抛「no React runtime」，
+// shell 只会报 `web boot: 1 entry did not activate`，看不出根因。
+if (!requireLog.includes('react')) {
+  throw new Error(`bundle never required("react") during materialization (saw: ${requireLog.join(', ') || 'nothing'})`)
+}
+console.log('ok   react resolved through factory')
 
 const toolviews = new Map()
 let dashboard
+// ctx 只带 inject 进来的服务 —— 与 shell 完全一致，故意不给 require。
 const ctx = {
   slots: {
     inject(_name, callback) {
@@ -118,11 +159,21 @@ for (const probe of ['.sh-card--tool', '--el-color-primary', '.el-table__empty-b
 if (sheet.length < 50000) throw new Error(`injected stylesheet looks truncated: ${sheet.length} chars`)
 console.log('ok   stylesheet injection'.padEnd(26), `${Math.round(sheet.length / 1024)} kB inline`)
 
-// Re-evaluating the module must not add a second copy.
+// Re-evaluating the module must not add a second copy. (Same two-phase load;
+// the second pass is a *different* factory instance, so it captures React from
+// its own require — the exact path a plugin reload takes.)
+const before = window.document.head.querySelectorAll('style[data-plugin-css]').length
+let second
+window.__ModuleLoader__ = { load: value => { second = value } }
 window.eval(readFileSync(join(root, 'lib/client.js'), 'utf8'))
-if (window.document.head.querySelectorAll('style[data-plugin-css]').length !== 1) {
+second.factory(specifier => {
+  if (specifier === 'react') return reactShim
+  throw new Error(`second load: unexpected require(${specifier})`)
+})
+if (window.document.head.querySelectorAll('style[data-plugin-css]').length !== before) {
   throw new Error('stylesheet injection is not idempotent')
 }
+window.__ModuleLoader__ = { load: () => {} }
 console.log('ok   stylesheet injection is idempotent')
 
 const flush = () => new Promise(resolve => setTimeout(resolve, 80))
@@ -141,10 +192,58 @@ const check = async (label, fn) => {
 function mountTool(toolName, block, phase = 'result') {
   const host = toolviews.get(toolName)
   if (!host) throw new Error(`no toolview registered for ${toolName}`)
-  const instance = host()
-  const element = instance.render()
-  instance.setProps({ toolName, phase, block })
-  return { instance, element }
+  const cell = window.document.createElement('div')
+  const view = renderReact(host, { toolName, phase, block })
+  cell.appendChild(view.element)
+  return { instance: { destroy: view.destroy }, element: cell }
+}
+
+/**
+ * 按渲染器的方式挂载一个 slot 条目：调用组件拿到 React 元素，物化进 DOM，
+ * 随后执行 `useEffect`（React 在提交阶段做这事）。
+ */
+function renderReact(Comp, props) {
+  pendingEffects = []
+  const tree = reactShim.createElement(Comp, props)
+  const host = window.document.createElement('div')
+  if (typeof tree.type === 'function') {
+    placeElement(tree.type(tree.props ?? {}), host)
+  } else {
+    placeElement(tree, host)
+  }
+  const cleanups = []
+  const effects = pendingEffects
+  pendingEffects = null
+  for (const effect of effects) {
+    const cleanup = effect()
+    if (typeof cleanup === 'function') cleanups.push(cleanup)
+  }
+  return { element: host, destroy() { for (const cleanup of cleanups.splice(0)) cleanup() } }
+}
+
+/** 把 React 元素树物化成真实 DOM。字符串类型是宿主标签，函数类型就地派发。 */
+function placeElement(element, parent) {
+  if (element === null || element === undefined) return null
+  if (typeof element === 'string' || typeof element === 'number') {
+    const text = window.document.createTextNode(String(element))
+    parent.appendChild(text)
+    return text
+  }
+  if (typeof element.type === 'function') return placeElement(element.type(element.props ?? {}), parent)
+
+  const node = window.document.createElement(element.type)
+  const props = element.props ?? {}
+  for (const [key, value] of Object.entries(props)) {
+    if (key === 'children' || value === undefined) continue
+    if (key === 'ref') { value.current = node; continue }
+    if (key === 'className') node.className = value
+    else if (key === 'style' && value && typeof value === 'object') Object.assign(node.style, value)
+    else if (key.startsWith('on') && typeof value === 'function') node.addEventListener(key.slice(2).toLowerCase(), value)
+    else node.setAttribute(key, String(value))
+  }
+  for (const child of props.children ?? []) placeElement(child, node)
+  parent.appendChild(node)
+  return node
 }
 
 const fixtures = readdirSync(join(root, 'tests/fixtures')).filter(file => file.startsWith('sport-'))
@@ -191,13 +290,27 @@ window.fetch = async () => new Response(JSON.stringify(overview), {
 globalThis.fetch = window.fetch
 
 await check('dashboard', async () => {
-  const instance = dashboard()
-  const element = instance.render()
+  const view = renderReact(dashboard, { inspectCall() {}, openView() {}, viewRequest: undefined })
   await flush()
-  const html = element?.innerHTML ?? ''
+  const html = view.element.innerHTML
   if (html.length < 500) throw new Error(`dashboard rendered too little (${html.length} chars)`)
   if (!html.includes('运动健康')) throw new Error('dashboard header missing')
-  instance.destroy()
+  view.destroy()
+})
+
+await check('slot entries are React components', async () => {
+  // 回归护栏：渲染器按 `jsx(Comp, props)` 挂载，组件必须**返回 React 元素**。
+  // 早期适配器返回 DOM 节点，React 抛 error #31，整个 conversation.view 崩成空白。
+  for (const [key, Comp] of toolviews) {
+    const element = Comp({ toolName: key, phase: 'start' })
+    if (element === null || typeof element !== 'object' || typeof element.type !== 'string') {
+      throw new Error(`${key}: slot component must return a React element`)
+    }
+  }
+  const element = dashboard({})
+  if (element === null || typeof element !== 'object' || element.type !== 'div') {
+    throw new Error('dashboard slot component must return a div element')
+  }
 })
 
 const relevantWarnings = warnings.filter(message => message.includes('[Vue warn]'))

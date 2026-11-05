@@ -61,8 +61,37 @@ dsh-sport-health
 
 - 工具卡片直接解析 MCP 结果里的 text JSON，不需要额外的 host 往返。
 - 看板走同源相对路径；Web 和桌面端（`dsh-app://app`）都会把应用请求转发给 Host，因此不需要绝对 URL 或 token。
-- 技术栈：**Vue 3**（`<script setup>`）+ **Element Plus 2** + **ECharts 6**。三者都打包进 `lib/client.js`，不依赖 Harness 提供 React 基线模块；ECharts 按需引入用到的图表类型与组件以控制体积。
+- 技术栈：**Vue 3**（`<script setup>`）+ **Element Plus 2** + **ECharts 6**。三者都打包进 `lib/client.js`；ECharts 按需引入用到的图表类型与组件以控制体积。
 - Element Plus 只有浅色主题，因此 `ThemeProvider.vue` 在 `[data-theme="dark"]` / `prefers-color-scheme: dark` 下重新声明 `--el-*` 变量，并注入一套 `--sh-*` 自定义变量供卡片和图表共用。
+
+### React 插槽 ⇄ Vue 组件：桥接层
+
+DSH 的 slot 渲染器按 **React 元素**挂载条目（renderer 的 `renderEntry()` 就是 `jsx(Comp, {...kit, ...ownerProps})`），所以注册进去的必须是 React 组件，并且**返回 React 元素**。`src/client/lib/mount.ts` 负责桥接，Vue 一行不用改：
+
+```ts
+// 1. 返回一个普通 React <div>，React 只持有这个空容器
+return React.createElement('div', { ref: containerRef, style: { display: 'contents' } })
+
+// 2. 在 useEffect 里让 Vue 接管容器内部
+React.useEffect(() => {
+  const app = createApp({ render: () => h(ElConfigProvider, { locale: zhCn }, () => h(VueComponent, { ...props })) })
+  app.mount(containerRef.current)
+  return () => app.unmount()          // 3. 卸载时清理
+}, [])
+```
+
+要点：
+
+- **React 不打包**，从 bundle 工厂的 `require('react')` 取宿主那一份。元素必须由同一 React 实例创建，否则 hooks 直接炸。
+- **require 只在物化阶段有效**。shell 用 `factory(require)` 物化 bundle，`apply(ctx)` 是之后由 cordis 单独调用的，那时 `ctx` 里**没有** `require`（只有 `inject` 声明的服务）。所以 `src/client/index.ts` 在**模块顶层**调 `captureShellReact()`，把这个 `require` 存进模块作用域——那是唯一的同步窗口。
+- 模块体里的 `require` 由打包器注入：`vite.config.ts` 的 `moduleLoader()` 在工厂体里写一行 `var __dsh_require__ = require;`，`react` 被设为 rollup external 并映射到该标识符（否则 UMD 包装层会去找一个不存在的全局 `require`）。
+- owner props 每次 React 渲染写进一个 `reactive` 对象，Vue 侧响应式更新，**不重新挂载**（工具阶段 `start` → `result` 只更新 props）。
+- 容器用 `display: contents` 不参与布局，grid/flex 父级看到的是 Vue 自己的子节点。
+- Element Plus 的 popover/tooltip 会 teleport 到 `body`，这是正常的，样式已在 `theme.ts` 里处理。
+
+> **踩过的坑 1**：适配器曾把 `render()` 改成直接返回 `document.createElement('div')`，React 把它当子节点 → `Minified React error #31 (Objects are not valid as a React child)` → `SlotErrorBoundary` 把整个 `conversation.view` 降级成空锚点，页面全白。`npm test` 的 `slot entries are React components` 用例守这条约束，`preview/preview.js` 与 `tests/render.mjs` 也改成按 `jsx(Comp, props)` 派发，否则这类问题在预览里永远看不见。
+
+> **踩过的坑 2**：改成桥接后曾一度 `apply(ctx)` 里调 `setHostRequire(ctx.require)`，而 shell 从不注入这个字段 → React 捕获静默失败 → 加载时报 `web boot: 1 entry did not activate / dsh-sport-health: failed`（组件要渲染时才抛「no React runtime」，所以错误信息指向了完全无关的「没激活」）。`tests/render.mjs` 现在断言 `factory` 期间必须出现 `require('react')` 调用，且 `ctx` 里**故意不放** `require`，模拟真实时序。
 
 ## 环境要求
 
@@ -226,7 +255,18 @@ npm run preview    # 静态预览页（端口 3100）
 | 工具名找不到 | MCP client 未连接成功；查看 Harness 日志里的 MCP 错误，或把 `failOnStartupError` 设为 `true` 让启动直接失败 |
 | `duplicate ... serverName` | 已有其他 bundle 注册 `sport_health`，改 `serverName` 并同步修改 `SERVER_NAME` |
 | 桌面端看板空白 | 相对路径 `/sport-health/api` 由桌面壳转发；确认插件 host 半激活（profile 中有 `sport-health` 条目） |
+| 视图标签可见但页面全白 | DevTools 里若报 `Minified React error #31`，说明 slot 组件返回了 DOM 节点而非 React 元素。跑 `npm test` 看 `slot entries are React components` 是否通过，再 `npm run build` |
+| 启动报 `web boot: 1 entry did not activate` + `dsh-sport-health: failed` | 插件条目激活失败，跟「界面」无关，先看 console 里紧随其后的真实异常（多为 `no React runtime`）。原因通常是 React 没在物化阶段取到；跑 `npm test`，`react resolved through factory` 这条就是守它的 |
 | 卡片有内容但完全没样式 | 检查 `<head>` 里是否有 `style[data-plugin-css="dsh-sport-health"]`。没有说明用的是旧产物，重新 `npm run build`；本项目**不会**产出可单独引用的 `lib/client.css` |
+
+### 打开「运动健康」为什么一次打 8 个工具
+
+看板不是「先问模型要数据」，而是 host 半对着 MCP 服务**并发拉一个聚合快照**（`src/host/api.ts` 的 `overview()`）：`get_running_summary`、`get_daily_running`、`get_training_mix`、`get_consistency`、`get_training_load`、`get_personal_bests`、`get_weather_impact`、`list_runs`。
+
+- 这些是 **host 侧代理调用**，不进入模型上下文、不消耗 token，也不影响对话。
+- 8 个调用并发执行（本机实测约 130 ms 返回全量数据），每个工具单独容错，失败只落到「部分数据不可用」。
+- `cacheTtlMs`（默认 10 s）内重复打开走缓存，只有 `?refresh=1` 或点「刷新」才清缓存。
+- 想进一步降噪：调大 `cacheTtlMs`，或把 `Dashboard.vue` 拆成按区块懒加载。
 
 ## 数据说明
 
