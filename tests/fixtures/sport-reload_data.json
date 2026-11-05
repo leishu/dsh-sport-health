@@ -1,0 +1,24 @@
+{
+  "status": "OK",
+  "message": "已同步 6 条跑步记录，来源文件 6 个",
+  "runCount": 6,
+  "warnings": [],
+  "storage": {
+    "type": "sqlite",
+    "dbPath": "./data/sport-health.db",
+    "scannedFiles": 6,
+    "importedFiles": 0,
+    "unchangedFiles": 6,
+    "syncedAt": "2026-11-05 00:21:56",
+    "missingSourceFiles": [],
+    "weather": {
+      "totalRuns": 6,
+      "ok": 6,
+      "unavailable": 0,
+      "failed": 0,
+      "missing": 0,
+      "lastFetchedAt": "2026-11-04 03:03:55",
+      "coveragePercent": 100
+    }
+  }
+}

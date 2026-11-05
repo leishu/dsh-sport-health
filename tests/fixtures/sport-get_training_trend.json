@@ -1,0 +1,112 @@
+{
+  "status": "OK",
+  "period": "week",
+  "count": 8,
+  "periods": [
+    {
+      "from": "2026-09-14",
+      "to": "2026-09-20",
+      "label": "2026-09-14 ~ 2026-09-20",
+      "runCount": 0,
+      "distanceKm": 0,
+      "durationMinutes": 0,
+      "paceSecondsPerKm": null,
+      "paceText": null,
+      "climbMeters": 0,
+      "distanceDeltaPercent": null,
+      "paceDeltaSecondsPerKm": null
+    },
+    {
+      "from": "2026-09-21",
+      "to": "2026-09-27",
+      "label": "2026-09-21 ~ 2026-09-27",
+      "runCount": 0,
+      "distanceKm": 0,
+      "durationMinutes": 0,
+      "paceSecondsPerKm": null,
+      "paceText": null,
+      "climbMeters": 0,
+      "distanceDeltaPercent": null,
+      "paceDeltaSecondsPerKm": null
+    },
+    {
+      "from": "2026-09-28",
+      "to": "2026-10-04",
+      "label": "2026-09-28 ~ 2026-10-04",
+      "runCount": 0,
+      "distanceKm": 0,
+      "durationMinutes": 0,
+      "paceSecondsPerKm": null,
+      "paceText": null,
+      "climbMeters": 0,
+      "distanceDeltaPercent": null,
+      "paceDeltaSecondsPerKm": null
+    },
+    {
+      "from": "2026-10-05",
+      "to": "2026-10-11",
+      "label": "2026-10-05 ~ 2026-10-11",
+      "runCount": 0,
+      "distanceKm": 0,
+      "durationMinutes": 0,
+      "paceSecondsPerKm": null,
+      "paceText": null,
+      "climbMeters": 0,
+      "distanceDeltaPercent": null,
+      "paceDeltaSecondsPerKm": null
+    },
+    {
+      "from": "2026-10-12",
+      "to": "2026-10-18",
+      "label": "2026-10-12 ~ 2026-10-18",
+      "runCount": 0,
+      "distanceKm": 0,
+      "durationMinutes": 0,
+      "paceSecondsPerKm": null,
+      "paceText": null,
+      "climbMeters": 0,
+      "distanceDeltaPercent": null,
+      "paceDeltaSecondsPerKm": null
+    },
+    {
+      "from": "2026-10-19",
+      "to": "2026-10-25",
+      "label": "2026-10-19 ~ 2026-10-25",
+      "runCount": 1,
+      "distanceKm": 7.12,
+      "durationMinutes": 40.8,
+      "paceSecondsPerKm": 343.7,
+      "paceText": "5'44\"/km",
+      "climbMeters": 10.1,
+      "distanceDeltaPercent": null,
+      "paceDeltaSecondsPerKm": null
+    },
+    {
+      "from": "2026-10-26",
+      "to": "2026-11-01",
+      "label": "2026-10-26 ~ 2026-11-01",
+      "runCount": 3,
+      "distanceKm": 22.89,
+      "durationMinutes": 131.4,
+      "paceSecondsPerKm": 344.4,
+      "paceText": "5'44\"/km",
+      "climbMeters": 94.7,
+      "distanceDeltaPercent": 221.5,
+      "paceDeltaSecondsPerKm": 0.7
+    },
+    {
+      "from": "2026-11-02",
+      "to": "2026-11-08",
+      "label": "2026-11-02 ~ 2026-11-08",
+      "runCount": 2,
+      "distanceKm": 15.53,
+      "durationMinutes": 89.6,
+      "paceSecondsPerKm": 346,
+      "paceText": "5'46\"/km",
+      "climbMeters": 29.4,
+      "distanceDeltaPercent": -32.2,
+      "paceDeltaSecondsPerKm": 1.6
+    }
+  ],
+  "text": "2026-11-02 ~ 2026-11-08 相比上一周期（2026-10-26 ~ 2026-11-01），跑量减少 32.2%，配速变慢 2 秒/公里"
+}

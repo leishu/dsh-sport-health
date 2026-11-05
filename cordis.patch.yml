@@ -1,0 +1,25 @@
+# dsh-sport-health bundle patch
+#
+# 1. Mount the official MCP client against the sport-health server. The model
+#    sees tools as `mcp__sport_health__<tool>`.
+# 2. Mount this package's host half. Its client half (chart toolviews + the
+#    "运动健康" conversation view) is picked up automatically from package.json
+#    `dsh.client`.
+#
+# If another bundle already configures the same MCP server, remove the first
+# row (or change `serverName`) to avoid a duplicate-namespace error.
+- insert:
+    - id: mcp-sport-health
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: sport_health
+        transport: streamable-http
+        url: http://127.0.0.1:8080/mcp
+        failOnStartupError: false
+        toolCallTimeoutMs: 60000
+    - id: sport-health
+      name: dsh-sport-health
+      config:
+        url: http://127.0.0.1:8080/mcp
+        timeoutMs: 10000
+        cacheTtlMs: 10000

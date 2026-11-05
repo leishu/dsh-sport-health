@@ -1,0 +1,126 @@
+{
+  "status": "OK",
+  "range": "2026-10-25 ~ 2026-11-04",
+  "totalRuns": 6,
+  "sampleSize": 6,
+  "baselinePaceSecondsPerKm": 344.8,
+  "baselinePaceText": "5'45\"/km",
+  "temperatureBuckets": [
+    {
+      "label": "低于 5°C",
+      "runCount": 3,
+      "distanceKm": 26.22,
+      "avgPaceSecondsPerKm": 345.8,
+      "avgPaceText": "5'46\"/km",
+      "paceDeltaSecondsPerKm": 1,
+      "avgTemperatureC": 4.6,
+      "avgHumidityPercent": 79.4,
+      "avgWindSpeedKmh": 5.8
+    },
+    {
+      "label": "5-10°C",
+      "runCount": 2,
+      "distanceKm": 12.19,
+      "avgPaceSecondsPerKm": 343.4,
+      "avgPaceText": "5'43\"/km",
+      "paceDeltaSecondsPerKm": -1.4,
+      "avgTemperatureC": 8.1,
+      "avgHumidityPercent": 53.4,
+      "avgWindSpeedKmh": 8.7
+    },
+    {
+      "label": "10-15°C",
+      "runCount": 1,
+      "distanceKm": 7.12,
+      "avgPaceSecondsPerKm": 343.7,
+      "avgPaceText": "5'44\"/km",
+      "paceDeltaSecondsPerKm": -1.1,
+      "avgTemperatureC": 12,
+      "avgHumidityPercent": 95,
+      "avgWindSpeedKmh": 6
+    }
+  ],
+  "humidityBuckets": [
+    {
+      "label": "低于 50%",
+      "runCount": 1,
+      "distanceKm": 7.06,
+      "avgPaceSecondsPerKm": 340.9,
+      "avgPaceText": "5'41\"/km",
+      "paceDeltaSecondsPerKm": -3.9,
+      "avgTemperatureC": 7.1,
+      "avgHumidityPercent": 33.8,
+      "avgWindSpeedKmh": 11.2
+    },
+    {
+      "label": "65-80%",
+      "runCount": 2,
+      "distanceKm": 13.4,
+      "avgPaceSecondsPerKm": 346.2,
+      "avgPaceText": "5'46\"/km",
+      "paceDeltaSecondsPerKm": 1.4,
+      "avgTemperatureC": 7,
+      "avgHumidityPercent": 69.5,
+      "avgWindSpeedKmh": 6.5
+    },
+    {
+      "label": "80% 及以上",
+      "runCount": 3,
+      "distanceKm": 25.08,
+      "avgPaceSecondsPerKm": 345.2,
+      "avgPaceText": "5'45\"/km",
+      "paceDeltaSecondsPerKm": 0.4,
+      "avgTemperatureC": 7,
+      "avgHumidityPercent": 89.1,
+      "avgWindSpeedKmh": 5.6
+    }
+  ],
+  "windBuckets": [
+    {
+      "label": "低于 10 km/h",
+      "runCount": 5,
+      "distanceKm": 38.48,
+      "avgPaceSecondsPerKm": 345.6,
+      "avgPaceText": "5'46\"/km",
+      "paceDeltaSecondsPerKm": 0.8,
+      "avgTemperatureC": 7,
+      "avgHumidityPercent": 81.2,
+      "avgWindSpeedKmh": 5.9
+    },
+    {
+      "label": "10-20 km/h",
+      "runCount": 1,
+      "distanceKm": 7.06,
+      "avgPaceSecondsPerKm": 340.9,
+      "avgPaceText": "5'41\"/km",
+      "paceDeltaSecondsPerKm": -3.9,
+      "avgTemperatureC": 7.1,
+      "avgHumidityPercent": 33.8,
+      "avgWindSpeedKmh": 11.2
+    }
+  ],
+  "dry": {
+    "label": "无降水",
+    "runCount": 5,
+    "distanceKm": 38.42,
+    "avgPaceSecondsPerKm": 345.1,
+    "avgPaceText": "5'45\"/km",
+    "paceDeltaSecondsPerKm": 0.3,
+    "avgTemperatureC": 6,
+    "avgHumidityPercent": 69,
+    "avgWindSpeedKmh": 7
+  },
+  "wet": {
+    "label": "有降水",
+    "runCount": 1,
+    "distanceKm": 7.12,
+    "avgPaceSecondsPerKm": 343.7,
+    "avgPaceText": "5'44\"/km",
+    "paceDeltaSecondsPerKm": -1.1,
+    "avgTemperatureC": 12,
+    "avgHumidityPercent": 95,
+    "avgWindSpeedKmh": 6
+  },
+  "temperaturePaceCorrelation": -0.27,
+  "text": "基于 6 次有天气记录的跑步（区间共 6 次），整体平均配速 5'45\"/km"
+}

@@ -1,0 +1,100 @@
+{
+  "status": "OK",
+  "range": "2026-10-25 ~ 2026-11-04",
+  "method": "riegel",
+  "exponent": 1.06,
+  "references": [
+    {
+      "targetMeters": 1000,
+      "runId": "20261027户外跑步",
+      "date": "2026-10-27",
+      "durationSeconds": 322,
+      "durationText": "5 分 22 秒",
+      "paceSecondsPerKm": 322,
+      "paceText": "5'22\"/km",
+      "startKm": 6.042,
+      "endKm": 7.042
+    },
+    {
+      "targetMeters": 5000,
+      "runId": "20261027户外跑步",
+      "date": "2026-10-27",
+      "durationSeconds": 1681.1,
+      "durationText": "28 分 01 秒",
+      "paceSecondsPerKm": 336.2,
+      "paceText": "5'36\"/km",
+      "startKm": 2.066,
+      "endKm": 7.066
+    },
+    {
+      "targetMeters": 10000,
+      "runId": "20261101户外跑步",
+      "date": "2026-11-01",
+      "durationSeconds": 3525.6,
+      "durationText": "58 分 46 秒",
+      "paceSecondsPerKm": 352.6,
+      "paceText": "5'53\"/km",
+      "startKm": 0,
+      "endKm": 10
+    }
+  ],
+  "predictions": [
+    {
+      "targetMeters": 5000,
+      "targetKm": 5,
+      "source": "ACTUAL",
+      "predictedSeconds": 1681.1,
+      "predictedText": "28 分 01 秒",
+      "paceSecondsPerKm": 336.2,
+      "paceText": "5'36\"/km",
+      "confidence": "HIGH",
+      "referenceMeters": 5000,
+      "referenceRunId": "20261027户外跑步",
+      "referenceDate": "2026-10-27",
+      "referenceDurationSeconds": 1681.1
+    },
+    {
+      "targetMeters": 10000,
+      "targetKm": 10,
+      "source": "ACTUAL",
+      "predictedSeconds": 3525.6,
+      "predictedText": "58 分 46 秒",
+      "paceSecondsPerKm": 352.6,
+      "paceText": "5'53\"/km",
+      "confidence": "HIGH",
+      "referenceMeters": 10000,
+      "referenceRunId": "20261101户外跑步",
+      "referenceDate": "2026-11-01",
+      "referenceDurationSeconds": 3525.6
+    },
+    {
+      "targetMeters": 21097.5,
+      "targetKm": 21.098,
+      "source": "RIEGEL",
+      "predictedSeconds": 7778.9,
+      "predictedText": "2 小时 09 分",
+      "paceSecondsPerKm": 368.7,
+      "paceText": "6'09\"/km",
+      "confidence": "MEDIUM",
+      "referenceMeters": 10000,
+      "referenceRunId": "20261101户外跑步",
+      "referenceDate": "2026-11-01",
+      "referenceDurationSeconds": 3525.6
+    },
+    {
+      "targetMeters": 42195,
+      "targetKm": 42.195,
+      "source": "RIEGEL",
+      "predictedSeconds": 16218.5,
+      "predictedText": "4 小时 30 分",
+      "paceSecondsPerKm": 384.4,
+      "paceText": "6'24\"/km",
+      "confidence": "LOW",
+      "referenceMeters": 10000,
+      "referenceRunId": "20261101户外跑步",
+      "referenceDate": "2026-11-01",
+      "referenceDurationSeconds": 3525.6
+    }
+  ],
+  "text": "基于 10 公里 最佳 58 分 46 秒（2026-11-01），预测 10 公里 约 58 分 46 秒（5'53\"/km）"
+}

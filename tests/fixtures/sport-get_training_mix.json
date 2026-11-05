@@ -1,0 +1,71 @@
+{
+  "status": "OK",
+  "range": "2026-10-25 ~ 2026-11-04",
+  "totalRuns": 6,
+  "types": [
+    {
+      "type": "EASY",
+      "typeText": "轻松跑",
+      "runCount": 6,
+      "distanceKm": 45.54,
+      "percent": 100
+    }
+  ],
+  "runs": [
+    {
+      "runId": "20261104户外跑步",
+      "date": "2026-11-04",
+      "distanceKm": 7.26,
+      "paceText": "5'46\"/km",
+      "type": "EASY",
+      "typeText": "轻松跑",
+      "confidence": "MEDIUM"
+    },
+    {
+      "runId": "20261103户外跑步",
+      "date": "2026-11-03",
+      "distanceKm": 8.27,
+      "paceText": "5'46\"/km",
+      "type": "EASY",
+      "typeText": "轻松跑",
+      "confidence": "MEDIUM"
+    },
+    {
+      "runId": "20261101户外跑步",
+      "date": "2026-11-01",
+      "distanceKm": 10.7,
+      "paceText": "5'46\"/km",
+      "type": "EASY",
+      "typeText": "轻松跑",
+      "confidence": "MEDIUM"
+    },
+    {
+      "runId": "20261028户外跑步",
+      "date": "2026-10-28",
+      "distanceKm": 5.13,
+      "paceText": "5'47\"/km",
+      "type": "EASY",
+      "typeText": "轻松跑",
+      "confidence": "MEDIUM"
+    },
+    {
+      "runId": "20261027户外跑步",
+      "date": "2026-10-27",
+      "distanceKm": 7.06,
+      "paceText": "5'41\"/km",
+      "type": "EASY",
+      "typeText": "轻松跑",
+      "confidence": "MEDIUM"
+    },
+    {
+      "runId": "20261025户外跑步",
+      "date": "2026-10-25",
+      "distanceKm": 7.12,
+      "paceText": "5'44\"/km",
+      "type": "EASY",
+      "typeText": "轻松跑",
+      "confidence": "MEDIUM"
+    }
+  ],
+  "text": "区间 2026-10-25 ~ 2026-11-04 共 6 次跑步：轻松跑 6 次（100.0%）"
+}

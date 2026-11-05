@@ -1,0 +1,32 @@
+# 依赖
+node_modules/
+
+# 构建产物（由 `npm run build` 生成）
+lib/
+
+# IDE / 编辑器
+.idea/
+*.iml
+.vscode/
+*.swp
+
+# 工作台会话记录（本地记忆，非项目内容）
+.workbuddy/
+
+# 回收站残留
+.Trash-*/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 日志与临时文件
+*.log
+npm-debug.log*
+.tmpout/
+preview/shots/
+
+# 环境变量
+.env
+.env.local
+.env.*.local

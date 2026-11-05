@@ -1,0 +1,25 @@
+{
+  "status": "OK",
+  "summary": {
+    "from": "2026-10-25",
+    "to": "2026-11-04",
+    "dayCount": 11,
+    "runCount": 6,
+    "recordedDays": 6,
+    "totalDistanceKm": 45.54,
+    "totalDurationMinutes": 261.7,
+    "totalClimbMeters": 134.2,
+    "totalDescentMeters": 143.4,
+    "avgDistanceKm": 7.59,
+    "avgDurationMinutes": 43.6,
+    "avgPaceSecondsPerKm": 344.8,
+    "avgPaceText": "5'45\"/km",
+    "bestPaceSecondsPerKm": 340.9,
+    "bestPaceRunId": "20261027户外跑步",
+    "longestRunId": "20261101户外跑步",
+    "longestDistanceKm": 10.7,
+    "firstRunDate": "2026-10-25",
+    "lastRunDate": "2026-11-04"
+  },
+  "text": "区间 2026-10-25 ~ 2026-11-04 共 6 次跑步，总距离 45.54 公里，总时长 261.7 分钟，平均配速 5'45\"/km，总爬升 134.2 米"
+}

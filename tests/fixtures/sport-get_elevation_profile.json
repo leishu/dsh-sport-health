@@ -1,0 +1,1084 @@
+{
+  "status": "OK",
+  "runId": "20261101户外跑步",
+  "date": "2026-11-01",
+  "bucketMeters": 100,
+  "smoothingMeters": 1,
+  "gpsDistanceKm": 10.698,
+  "totalGainMeters": 57.2,
+  "totalLossMeters": 52.9,
+  "minAltitudeMeters": 14.399999618530273,
+  "maxAltitudeMeters": 32.20000076293945,
+  "buckets": [
+    {
+      "fromKm": 0,
+      "toKm": 0.1,
+      "avgAltitudeMeters": 14.5,
+      "minAltitudeMeters": 14.4,
+      "maxAltitudeMeters": 14.8,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 0.1,
+      "toKm": 0.2,
+      "avgAltitudeMeters": 14.4,
+      "minAltitudeMeters": 14.4,
+      "maxAltitudeMeters": 14.4,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 0.2,
+      "toKm": 0.3,
+      "avgAltitudeMeters": 15.3,
+      "minAltitudeMeters": 14.4,
+      "maxAltitudeMeters": 18.4,
+      "gainMeters": 3.2,
+      "lossMeters": 0,
+      "avgGradePercent": 3.2
+    },
+    {
+      "fromKm": 0.3,
+      "toKm": 0.4,
+      "avgAltitudeMeters": 18.2,
+      "minAltitudeMeters": 16.9,
+      "maxAltitudeMeters": 19.1,
+      "gainMeters": 0,
+      "lossMeters": 1.5,
+      "avgGradePercent": -1.5
+    },
+    {
+      "fromKm": 0.4,
+      "toKm": 0.5,
+      "avgAltitudeMeters": 16.4,
+      "minAltitudeMeters": 15.5,
+      "maxAltitudeMeters": 16.9,
+      "gainMeters": 1.3,
+      "lossMeters": 1.4,
+      "avgGradePercent": -0.1
+    },
+    {
+      "fromKm": 0.5,
+      "toKm": 0.6,
+      "avgAltitudeMeters": 17.2,
+      "minAltitudeMeters": 16.8,
+      "maxAltitudeMeters": 17.3,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 0.6,
+      "toKm": 0.7,
+      "avgAltitudeMeters": 17.2,
+      "minAltitudeMeters": 17.2,
+      "maxAltitudeMeters": 17.2,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 0.7,
+      "toKm": 0.8,
+      "avgAltitudeMeters": 17.2,
+      "minAltitudeMeters": 17.2,
+      "maxAltitudeMeters": 17.8,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 0.8,
+      "toKm": 0.9,
+      "avgAltitudeMeters": 19.7,
+      "minAltitudeMeters": 17.8,
+      "maxAltitudeMeters": 20.8,
+      "gainMeters": 2.3,
+      "lossMeters": 0,
+      "avgGradePercent": 2.3
+    },
+    {
+      "fromKm": 0.9,
+      "toKm": 1,
+      "avgAltitudeMeters": 20.7,
+      "minAltitudeMeters": 20.7,
+      "maxAltitudeMeters": 20.8,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 1,
+      "toKm": 1.1,
+      "avgAltitudeMeters": 22.3,
+      "minAltitudeMeters": 20.7,
+      "maxAltitudeMeters": 23.8,
+      "gainMeters": 3.1,
+      "lossMeters": 0,
+      "avgGradePercent": 3.1
+    },
+    {
+      "fromKm": 1.1,
+      "toKm": 1.2,
+      "avgAltitudeMeters": 21.7,
+      "minAltitudeMeters": 20.6,
+      "maxAltitudeMeters": 23.2,
+      "gainMeters": 0,
+      "lossMeters": 2,
+      "avgGradePercent": -2
+    },
+    {
+      "fromKm": 1.2,
+      "toKm": 1.3,
+      "avgAltitudeMeters": 19.7,
+      "minAltitudeMeters": 19.1,
+      "maxAltitudeMeters": 20.6,
+      "gainMeters": 0,
+      "lossMeters": 1,
+      "avgGradePercent": -1
+    },
+    {
+      "fromKm": 1.3,
+      "toKm": 1.4,
+      "avgAltitudeMeters": 18.9,
+      "minAltitudeMeters": 18.6,
+      "maxAltitudeMeters": 19.1,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 1.4,
+      "toKm": 1.5,
+      "avgAltitudeMeters": 19.3,
+      "minAltitudeMeters": 18.6,
+      "maxAltitudeMeters": 20,
+      "gainMeters": 1.2,
+      "lossMeters": 0,
+      "avgGradePercent": 1.2
+    },
+    {
+      "fromKm": 1.5,
+      "toKm": 1.6,
+      "avgAltitudeMeters": 20,
+      "minAltitudeMeters": 20,
+      "maxAltitudeMeters": 20,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 1.6,
+      "toKm": 1.7,
+      "avgAltitudeMeters": 20,
+      "minAltitudeMeters": 20,
+      "maxAltitudeMeters": 20,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 1.7,
+      "toKm": 1.8,
+      "avgAltitudeMeters": 20,
+      "minAltitudeMeters": 20,
+      "maxAltitudeMeters": 20,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 1.8,
+      "toKm": 1.9,
+      "avgAltitudeMeters": 20.2,
+      "minAltitudeMeters": 20,
+      "maxAltitudeMeters": 21.6,
+      "gainMeters": 1.6,
+      "lossMeters": 0,
+      "avgGradePercent": 1.6
+    },
+    {
+      "fromKm": 1.9,
+      "toKm": 2,
+      "avgAltitudeMeters": 21.1,
+      "minAltitudeMeters": 20.6,
+      "maxAltitudeMeters": 21.6,
+      "gainMeters": 0,
+      "lossMeters": 1,
+      "avgGradePercent": -1
+    },
+    {
+      "fromKm": 2,
+      "toKm": 2.1,
+      "avgAltitudeMeters": 20.3,
+      "minAltitudeMeters": 19.3,
+      "maxAltitudeMeters": 20.6,
+      "gainMeters": 1.3,
+      "lossMeters": 1.3,
+      "avgGradePercent": 0
+    },
+    {
+      "fromKm": 2.1,
+      "toKm": 2.2,
+      "avgAltitudeMeters": 21.2,
+      "minAltitudeMeters": 19.8,
+      "maxAltitudeMeters": 22.7,
+      "gainMeters": 2.1,
+      "lossMeters": 2.5,
+      "avgGradePercent": -0.4
+    },
+    {
+      "fromKm": 2.2,
+      "toKm": 2.3,
+      "avgAltitudeMeters": 19.8,
+      "minAltitudeMeters": 19.4,
+      "maxAltitudeMeters": 20.1,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 2.3,
+      "toKm": 2.4,
+      "avgAltitudeMeters": 21.2,
+      "minAltitudeMeters": 19.4,
+      "maxAltitudeMeters": 22.5,
+      "gainMeters": 2.8,
+      "lossMeters": 0,
+      "avgGradePercent": 2.8
+    },
+    {
+      "fromKm": 2.4,
+      "toKm": 2.5,
+      "avgAltitudeMeters": 24.5,
+      "minAltitudeMeters": 22,
+      "maxAltitudeMeters": 26,
+      "gainMeters": 4,
+      "lossMeters": 0,
+      "avgGradePercent": 4
+    },
+    {
+      "fromKm": 2.5,
+      "toKm": 2.6,
+      "avgAltitudeMeters": 25.2,
+      "minAltitudeMeters": 24.4,
+      "maxAltitudeMeters": 25.6,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 2.6,
+      "toKm": 2.7,
+      "avgAltitudeMeters": 25.3,
+      "minAltitudeMeters": 24.8,
+      "maxAltitudeMeters": 25.9,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 2.7,
+      "toKm": 2.8,
+      "avgAltitudeMeters": 24.9,
+      "minAltitudeMeters": 24.9,
+      "maxAltitudeMeters": 24.9,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 2.8,
+      "toKm": 2.9,
+      "avgAltitudeMeters": 24.9,
+      "minAltitudeMeters": 24.9,
+      "maxAltitudeMeters": 24.9,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 2.9,
+      "toKm": 3,
+      "avgAltitudeMeters": 24.9,
+      "minAltitudeMeters": 24.9,
+      "maxAltitudeMeters": 24.9,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 3,
+      "toKm": 3.1,
+      "avgAltitudeMeters": 24.9,
+      "minAltitudeMeters": 24.9,
+      "maxAltitudeMeters": 24.9,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 3.1,
+      "toKm": 3.2,
+      "avgAltitudeMeters": 25.4,
+      "minAltitudeMeters": 24.9,
+      "maxAltitudeMeters": 26.4,
+      "gainMeters": 1.5,
+      "lossMeters": 0,
+      "avgGradePercent": 1.5
+    },
+    {
+      "fromKm": 3.2,
+      "toKm": 3.3,
+      "avgAltitudeMeters": 26.4,
+      "minAltitudeMeters": 25.7,
+      "maxAltitudeMeters": 27.2,
+      "gainMeters": 1.2,
+      "lossMeters": 0,
+      "avgGradePercent": 1.2
+    },
+    {
+      "fromKm": 3.3,
+      "toKm": 3.4,
+      "avgAltitudeMeters": 27.2,
+      "minAltitudeMeters": 25.8,
+      "maxAltitudeMeters": 27.5,
+      "gainMeters": 0,
+      "lossMeters": 1.4,
+      "avgGradePercent": -1.4
+    },
+    {
+      "fromKm": 3.4,
+      "toKm": 3.5,
+      "avgAltitudeMeters": 24.2,
+      "minAltitudeMeters": 22.9,
+      "maxAltitudeMeters": 25.8,
+      "gainMeters": 0,
+      "lossMeters": 2.5,
+      "avgGradePercent": -2.5
+    },
+    {
+      "fromKm": 3.5,
+      "toKm": 3.6,
+      "avgAltitudeMeters": 22.9,
+      "minAltitudeMeters": 22.8,
+      "maxAltitudeMeters": 23.8,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 3.6,
+      "toKm": 3.7,
+      "avgAltitudeMeters": 25.3,
+      "minAltitudeMeters": 23.8,
+      "maxAltitudeMeters": 26.4,
+      "gainMeters": 2.3,
+      "lossMeters": 0,
+      "avgGradePercent": 2.3
+    },
+    {
+      "fromKm": 3.7,
+      "toKm": 3.8,
+      "avgAltitudeMeters": 26.6,
+      "minAltitudeMeters": 25.5,
+      "maxAltitudeMeters": 27.8,
+      "gainMeters": 1.5,
+      "lossMeters": 1.7,
+      "avgGradePercent": -0.2
+    },
+    {
+      "fromKm": 3.8,
+      "toKm": 3.9,
+      "avgAltitudeMeters": 25.3,
+      "minAltitudeMeters": 25,
+      "maxAltitudeMeters": 25.5,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 3.9,
+      "toKm": 4,
+      "avgAltitudeMeters": 25.3,
+      "minAltitudeMeters": 25.2,
+      "maxAltitudeMeters": 25.3,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 4,
+      "toKm": 4.1,
+      "avgAltitudeMeters": 25.3,
+      "minAltitudeMeters": 25.3,
+      "maxAltitudeMeters": 25.3,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 4.1,
+      "toKm": 4.2,
+      "avgAltitudeMeters": 25.3,
+      "minAltitudeMeters": 25.3,
+      "maxAltitudeMeters": 25.3,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 4.2,
+      "toKm": 4.3,
+      "avgAltitudeMeters": 25.3,
+      "minAltitudeMeters": 25.3,
+      "maxAltitudeMeters": 25.3,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 4.3,
+      "toKm": 4.4,
+      "avgAltitudeMeters": 25.3,
+      "minAltitudeMeters": 25.3,
+      "maxAltitudeMeters": 25.3,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 4.4,
+      "toKm": 4.5,
+      "avgAltitudeMeters": 25.3,
+      "minAltitudeMeters": 25.3,
+      "maxAltitudeMeters": 25.3,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 4.5,
+      "toKm": 4.6,
+      "avgAltitudeMeters": 25.3,
+      "minAltitudeMeters": 25.3,
+      "maxAltitudeMeters": 25.3,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 4.6,
+      "toKm": 4.7,
+      "avgAltitudeMeters": 25.8,
+      "minAltitudeMeters": 25.3,
+      "maxAltitudeMeters": 27.9,
+      "gainMeters": 2.6,
+      "lossMeters": 1.3,
+      "avgGradePercent": 1.3
+    },
+    {
+      "fromKm": 4.7,
+      "toKm": 4.8,
+      "avgAltitudeMeters": 27.7,
+      "minAltitudeMeters": 26.4,
+      "maxAltitudeMeters": 28.8,
+      "gainMeters": 1.6,
+      "lossMeters": 0,
+      "avgGradePercent": 1.6
+    },
+    {
+      "fromKm": 4.8,
+      "toKm": 4.9,
+      "avgAltitudeMeters": 27.9,
+      "minAltitudeMeters": 26.9,
+      "maxAltitudeMeters": 28.8,
+      "gainMeters": 0,
+      "lossMeters": 1.5,
+      "avgGradePercent": -1.5
+    },
+    {
+      "fromKm": 4.9,
+      "toKm": 5,
+      "avgAltitudeMeters": 28.7,
+      "minAltitudeMeters": 27.5,
+      "maxAltitudeMeters": 29.4,
+      "gainMeters": 2.7,
+      "lossMeters": 1.9,
+      "avgGradePercent": 0.8
+    },
+    {
+      "fromKm": 5,
+      "toKm": 5.1,
+      "avgAltitudeMeters": 28.5,
+      "minAltitudeMeters": 27.3,
+      "maxAltitudeMeters": 29.6,
+      "gainMeters": 1.1,
+      "lossMeters": 1.2,
+      "avgGradePercent": -0.1
+    },
+    {
+      "fromKm": 5.1,
+      "toKm": 5.2,
+      "avgAltitudeMeters": 26.9,
+      "minAltitudeMeters": 25.3,
+      "maxAltitudeMeters": 28,
+      "gainMeters": 1.6,
+      "lossMeters": 2.7,
+      "avgGradePercent": -1.1
+    },
+    {
+      "fromKm": 5.2,
+      "toKm": 5.3,
+      "avgAltitudeMeters": 27.3,
+      "minAltitudeMeters": 26,
+      "maxAltitudeMeters": 28.6,
+      "gainMeters": 1.1,
+      "lossMeters": 0,
+      "avgGradePercent": 1.1
+    },
+    {
+      "fromKm": 5.3,
+      "toKm": 5.4,
+      "avgAltitudeMeters": 29.1,
+      "minAltitudeMeters": 28.3,
+      "maxAltitudeMeters": 30,
+      "gainMeters": 1.3,
+      "lossMeters": 0,
+      "avgGradePercent": 1.3
+    },
+    {
+      "fromKm": 5.4,
+      "toKm": 5.5,
+      "avgAltitudeMeters": 30,
+      "minAltitudeMeters": 29.4,
+      "maxAltitudeMeters": 30.7,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 5.5,
+      "toKm": 5.6,
+      "avgAltitudeMeters": 30.7,
+      "minAltitudeMeters": 30.7,
+      "maxAltitudeMeters": 30.7,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 5.6,
+      "toKm": 5.7,
+      "avgAltitudeMeters": 31.2,
+      "minAltitudeMeters": 30.7,
+      "maxAltitudeMeters": 32.2,
+      "gainMeters": 1.5,
+      "lossMeters": 1.1,
+      "avgGradePercent": 0.4
+    },
+    {
+      "fromKm": 5.7,
+      "toKm": 5.8,
+      "avgAltitudeMeters": 31,
+      "minAltitudeMeters": 31,
+      "maxAltitudeMeters": 31,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 5.8,
+      "toKm": 5.9,
+      "avgAltitudeMeters": 31,
+      "minAltitudeMeters": 31,
+      "maxAltitudeMeters": 31,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 5.9,
+      "toKm": 6,
+      "avgAltitudeMeters": 31,
+      "minAltitudeMeters": 31,
+      "maxAltitudeMeters": 31,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 6,
+      "toKm": 6.1,
+      "avgAltitudeMeters": 31,
+      "minAltitudeMeters": 31,
+      "maxAltitudeMeters": 31,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 6.1,
+      "toKm": 6.2,
+      "avgAltitudeMeters": 31,
+      "minAltitudeMeters": 31,
+      "maxAltitudeMeters": 31,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 6.2,
+      "toKm": 6.3,
+      "avgAltitudeMeters": 29.9,
+      "minAltitudeMeters": 28.6,
+      "maxAltitudeMeters": 31,
+      "gainMeters": 0,
+      "lossMeters": 1.8,
+      "avgGradePercent": -1.8
+    },
+    {
+      "fromKm": 6.3,
+      "toKm": 6.4,
+      "avgAltitudeMeters": 28.6,
+      "minAltitudeMeters": 28.6,
+      "maxAltitudeMeters": 28.6,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 6.4,
+      "toKm": 6.5,
+      "avgAltitudeMeters": 28.6,
+      "minAltitudeMeters": 28.6,
+      "maxAltitudeMeters": 28.6,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 6.5,
+      "toKm": 6.6,
+      "avgAltitudeMeters": 28.6,
+      "minAltitudeMeters": 28.6,
+      "maxAltitudeMeters": 28.6,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 6.6,
+      "toKm": 6.7,
+      "avgAltitudeMeters": 27.4,
+      "minAltitudeMeters": 26.5,
+      "maxAltitudeMeters": 28.6,
+      "gainMeters": 0,
+      "lossMeters": 1.6,
+      "avgGradePercent": -1.6
+    },
+    {
+      "fromKm": 6.7,
+      "toKm": 6.8,
+      "avgAltitudeMeters": 26.9,
+      "minAltitudeMeters": 26.8,
+      "maxAltitudeMeters": 26.9,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 6.8,
+      "toKm": 6.9,
+      "avgAltitudeMeters": 26.2,
+      "minAltitudeMeters": 25.3,
+      "maxAltitudeMeters": 26.9,
+      "gainMeters": 0,
+      "lossMeters": 1.5,
+      "avgGradePercent": -1.5
+    },
+    {
+      "fromKm": 6.9,
+      "toKm": 7,
+      "avgAltitudeMeters": 25.9,
+      "minAltitudeMeters": 25.8,
+      "maxAltitudeMeters": 26.1,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 7,
+      "toKm": 7.1,
+      "avgAltitudeMeters": 26.7,
+      "minAltitudeMeters": 25.9,
+      "maxAltitudeMeters": 27,
+      "gainMeters": 1.1,
+      "lossMeters": 0,
+      "avgGradePercent": 1.1
+    },
+    {
+      "fromKm": 7.1,
+      "toKm": 7.2,
+      "avgAltitudeMeters": 27,
+      "minAltitudeMeters": 27,
+      "maxAltitudeMeters": 27,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 7.2,
+      "toKm": 7.3,
+      "avgAltitudeMeters": 26,
+      "minAltitudeMeters": 25.3,
+      "maxAltitudeMeters": 27,
+      "gainMeters": 0,
+      "lossMeters": 1.6,
+      "avgGradePercent": -1.6
+    },
+    {
+      "fromKm": 7.3,
+      "toKm": 7.4,
+      "avgAltitudeMeters": 25.7,
+      "minAltitudeMeters": 25.4,
+      "maxAltitudeMeters": 27.2,
+      "gainMeters": 1.6,
+      "lossMeters": 0,
+      "avgGradePercent": 1.6
+    },
+    {
+      "fromKm": 7.4,
+      "toKm": 7.5,
+      "avgAltitudeMeters": 27.4,
+      "minAltitudeMeters": 27.2,
+      "maxAltitudeMeters": 27.5,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 7.5,
+      "toKm": 7.6,
+      "avgAltitudeMeters": 27.5,
+      "minAltitudeMeters": 27.5,
+      "maxAltitudeMeters": 27.5,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 7.6,
+      "toKm": 7.7,
+      "avgAltitudeMeters": 26.9,
+      "minAltitudeMeters": 25.8,
+      "maxAltitudeMeters": 27.5,
+      "gainMeters": 1.1,
+      "lossMeters": 1.7,
+      "avgGradePercent": -0.6
+    },
+    {
+      "fromKm": 7.7,
+      "toKm": 7.8,
+      "avgAltitudeMeters": 26.3,
+      "minAltitudeMeters": 26,
+      "maxAltitudeMeters": 26.8,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 7.8,
+      "toKm": 7.9,
+      "avgAltitudeMeters": 26,
+      "minAltitudeMeters": 26,
+      "maxAltitudeMeters": 26,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 7.9,
+      "toKm": 8,
+      "avgAltitudeMeters": 26,
+      "minAltitudeMeters": 26,
+      "maxAltitudeMeters": 26,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 8,
+      "toKm": 8.1,
+      "avgAltitudeMeters": 24.2,
+      "minAltitudeMeters": 22.1,
+      "maxAltitudeMeters": 26,
+      "gainMeters": 0,
+      "lossMeters": 3.5,
+      "avgGradePercent": -3.5
+    },
+    {
+      "fromKm": 8.1,
+      "toKm": 8.2,
+      "avgAltitudeMeters": 21.6,
+      "minAltitudeMeters": 21.5,
+      "maxAltitudeMeters": 22.1,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 8.2,
+      "toKm": 8.3,
+      "avgAltitudeMeters": 20,
+      "minAltitudeMeters": 19.7,
+      "maxAltitudeMeters": 21.5,
+      "gainMeters": 0,
+      "lossMeters": 1.5,
+      "avgGradePercent": -1.5
+    },
+    {
+      "fromKm": 8.3,
+      "toKm": 8.4,
+      "avgAltitudeMeters": 19.8,
+      "minAltitudeMeters": 19.8,
+      "maxAltitudeMeters": 19.8,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 8.4,
+      "toKm": 8.5,
+      "avgAltitudeMeters": 19.8,
+      "minAltitudeMeters": 19.8,
+      "maxAltitudeMeters": 19.8,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 8.5,
+      "toKm": 8.6,
+      "avgAltitudeMeters": 19.8,
+      "minAltitudeMeters": 19.8,
+      "maxAltitudeMeters": 19.8,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 8.6,
+      "toKm": 8.7,
+      "avgAltitudeMeters": 19.8,
+      "minAltitudeMeters": 19.8,
+      "maxAltitudeMeters": 19.8,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 8.7,
+      "toKm": 8.8,
+      "avgAltitudeMeters": 19.8,
+      "minAltitudeMeters": 19.8,
+      "maxAltitudeMeters": 19.8,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 8.8,
+      "toKm": 8.9,
+      "avgAltitudeMeters": 19.8,
+      "minAltitudeMeters": 19.8,
+      "maxAltitudeMeters": 19.8,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 8.9,
+      "toKm": 9,
+      "avgAltitudeMeters": 19.8,
+      "minAltitudeMeters": 19.8,
+      "maxAltitudeMeters": 19.8,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 9,
+      "toKm": 9.1,
+      "avgAltitudeMeters": 19,
+      "minAltitudeMeters": 17.8,
+      "maxAltitudeMeters": 19.8,
+      "gainMeters": 0,
+      "lossMeters": 1.5,
+      "avgGradePercent": -1.5
+    },
+    {
+      "fromKm": 9.1,
+      "toKm": 9.2,
+      "avgAltitudeMeters": 18,
+      "minAltitudeMeters": 17.6,
+      "maxAltitudeMeters": 18.4,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 9.2,
+      "toKm": 9.3,
+      "avgAltitudeMeters": 17.7,
+      "minAltitudeMeters": 17.2,
+      "maxAltitudeMeters": 18.1,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 9.3,
+      "toKm": 9.4,
+      "avgAltitudeMeters": 16.9,
+      "minAltitudeMeters": 16.8,
+      "maxAltitudeMeters": 17.2,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 9.4,
+      "toKm": 9.5,
+      "avgAltitudeMeters": 16.8,
+      "minAltitudeMeters": 16.8,
+      "maxAltitudeMeters": 16.8,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 9.5,
+      "toKm": 9.6,
+      "avgAltitudeMeters": 16.8,
+      "minAltitudeMeters": 16.8,
+      "maxAltitudeMeters": 16.8,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 9.6,
+      "toKm": 9.7,
+      "avgAltitudeMeters": 16.5,
+      "minAltitudeMeters": 15,
+      "maxAltitudeMeters": 16.8,
+      "gainMeters": 0,
+      "lossMeters": 1.7,
+      "avgGradePercent": -1.7
+    },
+    {
+      "fromKm": 9.7,
+      "toKm": 9.8,
+      "avgAltitudeMeters": 15.1,
+      "minAltitudeMeters": 14.9,
+      "maxAltitudeMeters": 15.1,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 9.8,
+      "toKm": 9.9,
+      "avgAltitudeMeters": 15.1,
+      "minAltitudeMeters": 15.1,
+      "maxAltitudeMeters": 15.1,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 9.9,
+      "toKm": 10,
+      "avgAltitudeMeters": 15.1,
+      "minAltitudeMeters": 15.1,
+      "maxAltitudeMeters": 15.1,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 10,
+      "toKm": 10.1,
+      "avgAltitudeMeters": 15.1,
+      "minAltitudeMeters": 15.1,
+      "maxAltitudeMeters": 15.1,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 10.1,
+      "toKm": 10.2,
+      "avgAltitudeMeters": 16.6,
+      "minAltitudeMeters": 15.1,
+      "maxAltitudeMeters": 16.8,
+      "gainMeters": 1.6,
+      "lossMeters": 0,
+      "avgGradePercent": 1.6
+    },
+    {
+      "fromKm": 10.2,
+      "toKm": 10.3,
+      "avgAltitudeMeters": 17.7,
+      "minAltitudeMeters": 16.8,
+      "maxAltitudeMeters": 18.8,
+      "gainMeters": 1.7,
+      "lossMeters": 0,
+      "avgGradePercent": 1.7
+    },
+    {
+      "fromKm": 10.3,
+      "toKm": 10.4,
+      "avgAltitudeMeters": 18.8,
+      "minAltitudeMeters": 18.5,
+      "maxAltitudeMeters": 19,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 10.4,
+      "toKm": 10.5,
+      "avgAltitudeMeters": 18.6,
+      "minAltitudeMeters": 18.6,
+      "maxAltitudeMeters": 18.7,
+      "gainMeters": 0,
+      "lossMeters": 0,
+      "avgGradePercent": null
+    },
+    {
+      "fromKm": 10.5,
+      "toKm": 10.6,
+      "avgAltitudeMeters": 18.1,
+      "minAltitudeMeters": 17.1,
+      "maxAltitudeMeters": 18.6,
+      "gainMeters": 0,
+      "lossMeters": 1.5,
+      "avgGradePercent": -1.5
+    },
+    {
+      "fromKm": 10.6,
+      "toKm": 10.698,
+      "avgAltitudeMeters": 17.4,
+      "minAltitudeMeters": 17,
+      "maxAltitudeMeters": 19.1,
+      "gainMeters": 2,
+      "lossMeters": 0,
+      "avgGradePercent": 2
+    }
+  ]
+}

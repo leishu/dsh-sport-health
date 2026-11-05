@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>dsh-sport-health · Vue 3 + Element Plus + ECharts 预览</title>
+<style>
+  :root { color-scheme: light dark; }
+  body {
+    margin: 0; padding: 28px 24px 80px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f5f6f8; color: #1b1d22;
+  }
+  body[data-theme="dark"] { background: #131417; color: #e8e9ed; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  .lede { margin: 0 0 20px; font-size: 13px; opacity: .68; line-height: 1.6; }
+  .toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; align-items: center; }
+  .toolbar button {
+    font: inherit; font-size: 12.5px; padding: 6px 12px; border-radius: 999px;
+    border: 1px solid rgba(127,127,127,.3); background: rgba(127,127,127,.08);
+    color: inherit; cursor: pointer;
+  }
+  .toolbar button[aria-pressed="true"] { border-color: #4f8cff; background: rgba(79,140,255,.16); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 16px; align-items: start; }
+  .cell { min-width: 0; }
+  .cell > .name { font-size: 11px; opacity: .5; margin: 0 0 6px 2px; font-family: ui-monospace, monospace; }
+  .dashboard { max-width: 1200px; }
+  .spacer { flex: 1; }
+</style>
+</head>
+<body>
+  <h1>dsh-sport-health · 图表预览</h1>
+  <p class="lede">
+    用真实 MCP 返回渲染全部 20 个 toolview，以及“运动健康”会话视图。
+    Vue 3 + Element Plus 2 + ECharts；这个页面只用于开发预览，不参与 Harness 运行时。
+  </p>
+  <div class="toolbar" id="toolbar"></div>
+  <div id="root"></div>
+
+  <script>
+    window.__ModuleLoader__ = { load(registration) { window.__SPORT_HEALTH_REGISTRATION__ = registration } }
+  </script>
+  <script src="../lib/client.js"></script>
+  <script src="./preview.js"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+{
+  "status": "OK",
+  "activity": {
+    "id": "20261101户外跑步",
+    "activityId": "2026-10-31T23:12:42.000Z",
+    "sport": "户外跑步",
+    "date": "2026-11-01",
+    "startTime": "2026-11-01 07:12:42",
+    "endTime": "2026-11-01 08:14:18",
+    "startTimeUtc": "2026-10-31 23:12:42",
+    "durationSeconds": 3696,
+    "distanceMeters": 10697,
+    "climbMeters": 65.3,
+    "descentMeters": 68.6,
+    "routeType": "0",
+    "routeTypeText": "OUTDOOR",
+    "trackPointCount": 1842,
+    "avgSpeedKmh": 10.42,
+    "avgPaceSecondsPerKm": 345.5,
+    "startLatitude": 39.883344,
+    "startLongitude": 116.190454,
+    "endLatitude": 39.883287,
+    "endLongitude": 116.190586,
+    "minAltitudeMeters": 14.4,
+    "maxAltitudeMeters": 32.2,
+    "sourceFile": "20261101户外跑步.tcx",
+    "creator": "Health"
+  },
+  "paceText": "5'46\"/km",
+  "speedText": "10.4 km/h",
+  "weather": {
+    "status": "OK",
+    "provider": "open-meteo",
+    "fetchedAt": "2026-11-04 03:03:55",
+    "start": {
+      "observedAt": "2026-10-31 23:00:00",
+      "temperatureC": 4.5,
+      "apparentTemperatureC": 2.3,
+      "humidityPercent": 89,
+      "precipitationMm": 0,
+      "windSpeedKmh": 4.1,
+      "windDirectionDegrees": 229,
+      "windDirection": "西南",
+      "weatherCode": 2,
+      "condition": "多云"
+    },
+    "end": {
+      "observedAt": "2026-11-01 00:00:00",
+      "temperatureC": 7.4,
+      "apparentTemperatureC": 5.6,
+      "humidityPercent": 80.3,
+      "precipitationMm": 0,
+      "windSpeedKmh": 2.1,
+      "windDirectionDegrees": 89,
+      "windDirection": "东",
+      "weatherCode": 3,
+      "condition": "阴"
+    }
+  }
+}

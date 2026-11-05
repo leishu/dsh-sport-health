@@ -1,0 +1,58 @@
+{
+  "status": "OK",
+  "range": "2026-10-25 ~ 2026-11-04",
+  "activeDays": 6,
+  "totalDays": 11,
+  "activeRatePercent": 54.5,
+  "currentStreak": {
+    "days": 2,
+    "from": "2026-11-03",
+    "to": "2026-11-04"
+  },
+  "longestStreak": {
+    "days": 2,
+    "from": "2026-10-27",
+    "to": "2026-10-28"
+  },
+  "avgGapDays": 2,
+  "lastActiveDate": "2026-11-04",
+  "days": [
+    {
+      "date": "2026-10-25",
+      "runCount": 1,
+      "distanceKm": 7.12,
+      "durationMinutes": 40.8
+    },
+    {
+      "date": "2026-10-27",
+      "runCount": 1,
+      "distanceKm": 7.06,
+      "durationMinutes": 40.1
+    },
+    {
+      "date": "2026-10-28",
+      "runCount": 1,
+      "distanceKm": 5.13,
+      "durationMinutes": 29.7
+    },
+    {
+      "date": "2026-11-01",
+      "runCount": 1,
+      "distanceKm": 10.7,
+      "durationMinutes": 61.6
+    },
+    {
+      "date": "2026-11-03",
+      "runCount": 1,
+      "distanceKm": 8.27,
+      "durationMinutes": 47.7
+    },
+    {
+      "date": "2026-11-04",
+      "runCount": 1,
+      "distanceKm": 7.26,
+      "durationMinutes": 41.9
+    }
+  ],
+  "text": "区间 2026-10-25 ~ 2026-11-04 内 6/11 天有记录（54.5%），当前连续 2 天，最长连续 2 天"
+}

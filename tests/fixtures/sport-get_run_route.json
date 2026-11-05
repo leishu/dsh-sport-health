@@ -1,0 +1,491 @@
+{
+  "status": "OK",
+  "runId": "20261101户外跑步",
+  "date": "2026-11-01",
+  "total": 80,
+  "offset": 0,
+  "limit": 80,
+  "hasMore": false,
+  "points": [
+    {
+      "timestamp": "2026-11-01 07:12:42",
+      "latitude": 39.883344,
+      "longitude": 116.190454,
+      "altitudeMeters": 14.8
+    },
+    {
+      "timestamp": "2026-11-01 07:13:27",
+      "latitude": 39.883674,
+      "longitude": 116.188959,
+      "altitudeMeters": 14.4
+    },
+    {
+      "timestamp": "2026-11-01 07:14:15",
+      "latitude": 39.884295,
+      "longitude": 116.187702,
+      "altitudeMeters": 17.6
+    },
+    {
+      "timestamp": "2026-11-01 07:15:01",
+      "latitude": 39.884638,
+      "longitude": 116.186467,
+      "altitudeMeters": 16.7
+    },
+    {
+      "timestamp": "2026-11-01 07:15:47",
+      "latitude": 39.884866,
+      "longitude": 116.185065,
+      "altitudeMeters": 17.3
+    },
+    {
+      "timestamp": "2026-11-01 07:16:35",
+      "latitude": 39.885778,
+      "longitude": 116.184055,
+      "altitudeMeters": 17.2
+    },
+    {
+      "timestamp": "2026-11-01 07:17:21",
+      "latitude": 39.886263,
+      "longitude": 116.182749,
+      "altitudeMeters": 19.5
+    },
+    {
+      "timestamp": "2026-11-01 07:18:07",
+      "latitude": 39.885813,
+      "longitude": 116.18136,
+      "altitudeMeters": 20.7
+    },
+    {
+      "timestamp": "2026-11-01 07:18:53",
+      "latitude": 39.886403,
+      "longitude": 116.180158,
+      "altitudeMeters": 23.2
+    },
+    {
+      "timestamp": "2026-11-01 07:19:41",
+      "latitude": 39.886845,
+      "longitude": 116.17865,
+      "altitudeMeters": 19.6
+    },
+    {
+      "timestamp": "2026-11-01 07:20:27",
+      "latitude": 39.886702,
+      "longitude": 116.177177,
+      "altitudeMeters": 19
+    },
+    {
+      "timestamp": "2026-11-01 07:21:13",
+      "latitude": 39.886978,
+      "longitude": 116.175718,
+      "altitudeMeters": 20
+    },
+    {
+      "timestamp": "2026-11-01 07:22:01",
+      "latitude": 39.887981,
+      "longitude": 116.175385,
+      "altitudeMeters": 20
+    },
+    {
+      "timestamp": "2026-11-01 07:22:47",
+      "latitude": 39.888296,
+      "longitude": 116.176725,
+      "altitudeMeters": 20
+    },
+    {
+      "timestamp": "2026-11-01 07:23:33",
+      "latitude": 39.889369,
+      "longitude": 116.17637,
+      "altitudeMeters": 21.6
+    },
+    {
+      "timestamp": "2026-11-01 07:24:21",
+      "latitude": 39.88926,
+      "longitude": 116.174728,
+      "altitudeMeters": 20.5
+    },
+    {
+      "timestamp": "2026-11-01 07:25:07",
+      "latitude": 39.889157,
+      "longitude": 116.173177,
+      "altitudeMeters": 20.2
+    },
+    {
+      "timestamp": "2026-11-01 07:25:53",
+      "latitude": 39.889065,
+      "longitude": 116.171655,
+      "altitudeMeters": 19.4
+    },
+    {
+      "timestamp": "2026-11-01 07:26:39",
+      "latitude": 39.888958,
+      "longitude": 116.170134,
+      "altitudeMeters": 24.8
+    },
+    {
+      "timestamp": "2026-11-01 07:27:27",
+      "latitude": 39.888768,
+      "longitude": 116.168538,
+      "altitudeMeters": 25.4
+    },
+    {
+      "timestamp": "2026-11-01 07:28:13",
+      "latitude": 39.888816,
+      "longitude": 116.167034,
+      "altitudeMeters": 24.9
+    },
+    {
+      "timestamp": "2026-11-01 07:28:59",
+      "latitude": 39.888664,
+      "longitude": 116.165753,
+      "altitudeMeters": 24.9
+    },
+    {
+      "timestamp": "2026-11-01 07:29:47",
+      "latitude": 39.888665,
+      "longitude": 116.164203,
+      "altitudeMeters": 24.9
+    },
+    {
+      "timestamp": "2026-11-01 07:30:33",
+      "latitude": 39.889446,
+      "longitude": 116.163183,
+      "altitudeMeters": 24.9
+    },
+    {
+      "timestamp": "2026-11-01 07:31:19",
+      "latitude": 39.89035,
+      "longitude": 116.162168,
+      "altitudeMeters": 26.6
+    },
+    {
+      "timestamp": "2026-11-01 07:32:07",
+      "latitude": 39.890742,
+      "longitude": 116.161089,
+      "altitudeMeters": 27.4
+    },
+    {
+      "timestamp": "2026-11-01 07:32:53",
+      "latitude": 39.89174,
+      "longitude": 116.160189,
+      "altitudeMeters": 22.8
+    },
+    {
+      "timestamp": "2026-11-01 07:33:39",
+      "latitude": 39.892771,
+      "longitude": 116.159427,
+      "altitudeMeters": 26.1
+    },
+    {
+      "timestamp": "2026-11-01 07:34:27",
+      "latitude": 39.893254,
+      "longitude": 116.157899,
+      "altitudeMeters": 25.5
+    },
+    {
+      "timestamp": "2026-11-01 07:35:13",
+      "latitude": 39.894004,
+      "longitude": 116.15673,
+      "altitudeMeters": 25.3
+    },
+    {
+      "timestamp": "2026-11-01 07:35:59",
+      "latitude": 39.894803,
+      "longitude": 116.15558,
+      "altitudeMeters": 25.3
+    },
+    {
+      "timestamp": "2026-11-01 07:36:45",
+      "latitude": 39.895646,
+      "longitude": 116.154578,
+      "altitudeMeters": 25.3
+    },
+    {
+      "timestamp": "2026-11-01 07:37:33",
+      "latitude": 39.896616,
+      "longitude": 116.153632,
+      "altitudeMeters": 25.3
+    },
+    {
+      "timestamp": "2026-11-01 07:38:19",
+      "latitude": 39.897441,
+      "longitude": 116.15253,
+      "altitudeMeters": 25.3
+    },
+    {
+      "timestamp": "2026-11-01 07:39:05",
+      "latitude": 39.898171,
+      "longitude": 116.151366,
+      "altitudeMeters": 25.3
+    },
+    {
+      "timestamp": "2026-11-01 07:39:53",
+      "latitude": 39.899213,
+      "longitude": 116.15085,
+      "altitudeMeters": 26.4
+    },
+    {
+      "timestamp": "2026-11-01 07:40:39",
+      "latitude": 39.9001,
+      "longitude": 116.149966,
+      "altitudeMeters": 27.3
+    },
+    {
+      "timestamp": "2026-11-01 07:41:29",
+      "latitude": 39.901126,
+      "longitude": 116.149532,
+      "altitudeMeters": 29.4
+    },
+    {
+      "timestamp": "2026-11-01 07:42:19",
+      "latitude": 39.902025,
+      "longitude": 116.149053,
+      "altitudeMeters": 28.7
+    },
+    {
+      "timestamp": "2026-11-01 07:43:05",
+      "latitude": 39.903039,
+      "longitude": 116.148355,
+      "altitudeMeters": 26
+    },
+    {
+      "timestamp": "2026-11-01 07:43:51",
+      "latitude": 39.904095,
+      "longitude": 116.147683,
+      "altitudeMeters": 28.3
+    },
+    {
+      "timestamp": "2026-11-01 07:44:37",
+      "latitude": 39.905276,
+      "longitude": 116.147339,
+      "altitudeMeters": 30.5
+    },
+    {
+      "timestamp": "2026-11-01 07:46:41",
+      "latitude": 39.904735,
+      "longitude": 116.147367,
+      "altitudeMeters": 30.7
+    },
+    {
+      "timestamp": "2026-11-01 07:47:27",
+      "latitude": 39.903614,
+      "longitude": 116.147974,
+      "altitudeMeters": 31
+    },
+    {
+      "timestamp": "2026-11-01 07:48:13",
+      "latitude": 39.902504,
+      "longitude": 116.148581,
+      "altitudeMeters": 31
+    },
+    {
+      "timestamp": "2026-11-01 07:49:01",
+      "latitude": 39.901452,
+      "longitude": 116.149483,
+      "altitudeMeters": 31
+    },
+    {
+      "timestamp": "2026-11-01 07:49:47",
+      "latitude": 39.900263,
+      "longitude": 116.150183,
+      "altitudeMeters": 31
+    },
+    {
+      "timestamp": "2026-11-01 07:50:33",
+      "latitude": 39.899089,
+      "longitude": 116.150948,
+      "altitudeMeters": 28.6
+    },
+    {
+      "timestamp": "2026-11-01 07:51:21",
+      "latitude": 39.89794,
+      "longitude": 116.151657,
+      "altitudeMeters": 28.6
+    },
+    {
+      "timestamp": "2026-11-01 07:52:07",
+      "latitude": 39.897157,
+      "longitude": 116.152924,
+      "altitudeMeters": 28.6
+    },
+    {
+      "timestamp": "2026-11-01 07:52:53",
+      "latitude": 39.896229,
+      "longitude": 116.153986,
+      "altitudeMeters": 26.9
+    },
+    {
+      "timestamp": "2026-11-01 07:53:39",
+      "latitude": 39.895229,
+      "longitude": 116.154993,
+      "altitudeMeters": 25.6
+    },
+    {
+      "timestamp": "2026-11-01 07:54:27",
+      "latitude": 39.894412,
+      "longitude": 116.156339,
+      "altitudeMeters": 26.5
+    },
+    {
+      "timestamp": "2026-11-01 07:55:13",
+      "latitude": 39.893461,
+      "longitude": 116.157324,
+      "altitudeMeters": 27
+    },
+    {
+      "timestamp": "2026-11-01 07:55:59",
+      "latitude": 39.893065,
+      "longitude": 116.158801,
+      "altitudeMeters": 25.4
+    },
+    {
+      "timestamp": "2026-11-01 07:56:47",
+      "latitude": 39.892339,
+      "longitude": 116.160122,
+      "altitudeMeters": 27.5
+    },
+    {
+      "timestamp": "2026-11-01 07:57:33",
+      "latitude": 39.891432,
+      "longitude": 116.161166,
+      "altitudeMeters": 27.5
+    },
+    {
+      "timestamp": "2026-11-01 07:58:19",
+      "latitude": 39.890452,
+      "longitude": 116.162057,
+      "altitudeMeters": 26.6
+    },
+    {
+      "timestamp": "2026-11-01 07:59:07",
+      "latitude": 39.889518,
+      "longitude": 116.163091,
+      "altitudeMeters": 26
+    },
+    {
+      "timestamp": "2026-11-01 07:59:53",
+      "latitude": 39.888463,
+      "longitude": 116.163454,
+      "altitudeMeters": 26
+    },
+    {
+      "timestamp": "2026-11-01 08:00:39",
+      "latitude": 39.887474,
+      "longitude": 116.164257,
+      "altitudeMeters": 21.6
+    },
+    {
+      "timestamp": "2026-11-01 08:01:27",
+      "latitude": 39.886748,
+      "longitude": 116.165488,
+      "altitudeMeters": 19.8
+    },
+    {
+      "timestamp": "2026-11-01 08:02:13",
+      "latitude": 39.886078,
+      "longitude": 116.166706,
+      "altitudeMeters": 19.8
+    },
+    {
+      "timestamp": "2026-11-01 08:02:59",
+      "latitude": 39.885354,
+      "longitude": 116.167964,
+      "altitudeMeters": 19.8
+    },
+    {
+      "timestamp": "2026-11-01 08:03:45",
+      "latitude": 39.884912,
+      "longitude": 116.169389,
+      "altitudeMeters": 19.8
+    },
+    {
+      "timestamp": "2026-11-01 08:04:33",
+      "latitude": 39.884185,
+      "longitude": 116.170697,
+      "altitudeMeters": 19.8
+    },
+    {
+      "timestamp": "2026-11-01 08:05:19",
+      "latitude": 39.883988,
+      "longitude": 116.172162,
+      "altitudeMeters": 19.8
+    },
+    {
+      "timestamp": "2026-11-01 08:06:05",
+      "latitude": 39.883428,
+      "longitude": 116.173553,
+      "altitudeMeters": 17.9
+    },
+    {
+      "timestamp": "2026-11-01 08:06:53",
+      "latitude": 39.882853,
+      "longitude": 116.174997,
+      "altitudeMeters": 17.9
+    },
+    {
+      "timestamp": "2026-11-01 08:07:39",
+      "latitude": 39.882397,
+      "longitude": 116.176418,
+      "altitudeMeters": 16.8
+    },
+    {
+      "timestamp": "2026-11-01 08:08:25",
+      "latitude": 39.881929,
+      "longitude": 116.177851,
+      "altitudeMeters": 16.8
+    },
+    {
+      "timestamp": "2026-11-01 08:09:13",
+      "latitude": 39.8818,
+      "longitude": 116.179456,
+      "altitudeMeters": 16.8
+    },
+    {
+      "timestamp": "2026-11-01 08:09:59",
+      "latitude": 39.881759,
+      "longitude": 116.181007,
+      "altitudeMeters": 15.1
+    },
+    {
+      "timestamp": "2026-11-01 08:10:45",
+      "latitude": 39.881791,
+      "longitude": 116.182513,
+      "altitudeMeters": 15.1
+    },
+    {
+      "timestamp": "2026-11-01 08:11:31",
+      "latitude": 39.881835,
+      "longitude": 116.184059,
+      "altitudeMeters": 15.1
+    },
+    {
+      "timestamp": "2026-11-01 08:12:19",
+      "latitude": 39.882122,
+      "longitude": 116.185712,
+      "altitudeMeters": 16.8
+    },
+    {
+      "timestamp": "2026-11-01 08:13:05",
+      "latitude": 39.882399,
+      "longitude": 116.187121,
+      "altitudeMeters": 18.5
+    },
+    {
+      "timestamp": "2026-11-01 08:13:51",
+      "latitude": 39.88289,
+      "longitude": 116.188482,
+      "altitudeMeters": 18.6
+    },
+    {
+      "timestamp": "2026-11-01 08:14:39",
+      "latitude": 39.882939,
+      "longitude": 116.190152,
+      "altitudeMeters": 17.1
+    },
+    {
+      "timestamp": "2026-11-01 08:15:25",
+      "latitude": 39.883287,
+      "longitude": 116.190586,
+      "altitudeMeters": 18.9
+    }
+  ]
+}

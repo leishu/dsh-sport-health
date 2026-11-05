@@ -1,0 +1,20 @@
+{
+  "status": "OK",
+  "runId": "20261101户外跑步",
+  "date": "2026-11-01",
+  "type": "EASY",
+  "typeText": "轻松跑",
+  "confidence": "MEDIUM",
+  "reasons": [
+    "配速接近个人中位，未触发高强度或长距离规则"
+  ],
+  "distanceKm": 10.7,
+  "paceSecondsPerKm": 345.5,
+  "paceText": "5'46\"/km",
+  "baselinePaceSecondsPerKm": 345.7,
+  "baselinePaceText": "5'46\"/km",
+  "paceStdDevSeconds": 28.9,
+  "gradeAdjustedPaceSecondsPerKm": 351,
+  "gradeAdjustedPaceText": "5'51\"/km",
+  "text": "20261101户外跑步 判定为轻松跑（MEDIUM）"
+}

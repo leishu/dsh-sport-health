@@ -1,0 +1,21 @@
+{
+  "status": "OK",
+  "runId": "20261101户外跑步",
+  "date": "2026-11-01",
+  "minStopSeconds": 30,
+  "maxDisplacementMeters": 30,
+  "stopCount": 1,
+  "totalStopSeconds": 78,
+  "totalStopText": "1 分 18 秒",
+  "stops": [
+    {
+      "startTime": "2026-11-01 07:44:49",
+      "endTime": "2026-11-01 07:46:07",
+      "durationSeconds": 78,
+      "durationText": "1 分 18 秒",
+      "latitude": 39.905573,
+      "longitude": 116.147239,
+      "altitudeMeters": 30.700000762939453
+    }
+  ]
+}

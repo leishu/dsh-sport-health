@@ -1,0 +1,27 @@
+{
+  "status": "OK",
+  "runId": "20261101户外跑步",
+  "date": "2026-11-01",
+  "gpsDistanceKm": 10.698,
+  "efforts": [
+    {
+      "targetMeters": 1000,
+      "durationSeconds": 322.7,
+      "durationText": "5 分 23 秒",
+      "paceSecondsPerKm": 322.7,
+      "paceText": "5'23\"/km",
+      "startKm": 6.038,
+      "endKm": 7.038
+    },
+    {
+      "targetMeters": 5000,
+      "durationSeconds": 1692.3,
+      "durationText": "28 分 12 秒",
+      "paceSecondsPerKm": 338.5,
+      "paceText": "5'38\"/km",
+      "startKm": 5.615,
+      "endKm": 10.615
+    }
+  ],
+  "unavailableTargetsMeters": []
+}

@@ -1,0 +1,41 @@
+{
+  "status": "OK",
+  "verdict": "两次配速基本持平（相差不到 1 秒/公里）",
+  "paceDiffSecondsPerKm": 0.4,
+  "distanceDiffKm": -2.43,
+  "durationDiffMinutes": -13.9,
+  "base": {
+    "id": "20261101户外跑步",
+    "date": "2026-11-01",
+    "sport": "户外跑步",
+    "startTime": "2026-11-01 07:12:42",
+    "distanceKm": 10.7,
+    "durationMinutes": 61.6,
+    "durationText": "1 小时 01 分",
+    "paceSecondsPerKm": 345.5,
+    "paceText": "5'46\"/km",
+    "speedKmh": 10.42,
+    "climbMeters": 65.3,
+    "descentMeters": 68.6,
+    "routeType": "0",
+    "routeTypeText": "OUTDOOR",
+    "trackPointCount": 1842
+  },
+  "other": {
+    "id": "20261103户外跑步",
+    "date": "2026-11-03",
+    "sport": "户外跑步",
+    "startTime": "2026-11-03 06:45:36",
+    "distanceKm": 8.27,
+    "durationMinutes": 47.7,
+    "durationText": "47 分 39 秒",
+    "paceSecondsPerKm": 345.9,
+    "paceText": "5'46\"/km",
+    "speedKmh": 10.41,
+    "climbMeters": 15.8,
+    "descentMeters": 22.3,
+    "routeType": "0",
+    "routeTypeText": "OUTDOOR",
+    "trackPointCount": 1418
+  }
+}

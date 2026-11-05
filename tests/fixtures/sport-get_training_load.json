@@ -1,0 +1,34 @@
+{
+  "status": "OK",
+  "anchorDate": "2026-11-04",
+  "metric": "distance",
+  "acute": {
+    "days": 7,
+    "runCount": 3,
+    "trainingDays": 3,
+    "distanceKm": 26.22,
+    "durationMinutes": 151.2,
+    "load": 26.2
+  },
+  "chronic": {
+    "days": 28,
+    "runCount": 6,
+    "trainingDays": 6,
+    "distanceKm": 45.54,
+    "durationMinutes": 261.7,
+    "load": 45.5
+  },
+  "chronicWeeklyAverage": 11.38,
+  "acwr": 2.3,
+  "chronicCoverageDays": 11,
+  "dataSufficient": false,
+  "confidence": "LOW",
+  "riskLevel": "HIGH_RISK",
+  "weeklyRampPercent": 35.6,
+  "consecutiveTrainingDays": 2,
+  "restDaysLast7": 4,
+  "monotony": 0.85,
+  "strain": 22.3,
+  "recommendation": "数据只覆盖 11 天，ACWR 仅供参考。ACWR 超过 1.5，伤病风险升高；建议本周减量 20-30%，并增加休息日。",
+  "text": "截至 2026-11-04，近 7 天负荷 26.2 公里，慢性周均 11.38 公里，ACWR 2.3（高风险）；最近一周比前一周增加 35.6%"
+}

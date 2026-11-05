@@ -1,0 +1,167 @@
+{
+  "status": "OK",
+  "range": "2026-10-25 ~ 2026-11-04",
+  "groupBy": "day",
+  "groupCount": 6,
+  "groups": [
+    {
+      "from": "2026-10-25",
+      "to": "2026-10-25",
+      "label": "2026-10-25",
+      "runCount": 1,
+      "distanceKm": 7.12,
+      "durationMinutes": 40.8,
+      "paceSecondsPerKm": 343.7,
+      "paceText": "5'44\"/km",
+      "climbMeters": 10.1,
+      "runIds": [
+        "20261025户外跑步"
+      ]
+    },
+    {
+      "from": "2026-10-27",
+      "to": "2026-10-27",
+      "label": "2026-10-27",
+      "runCount": 1,
+      "distanceKm": 7.06,
+      "durationMinutes": 40.1,
+      "paceSecondsPerKm": 340.9,
+      "paceText": "5'41\"/km",
+      "climbMeters": 19.4,
+      "runIds": [
+        "20261027户外跑步"
+      ]
+    },
+    {
+      "from": "2026-10-28",
+      "to": "2026-10-28",
+      "label": "2026-10-28",
+      "runCount": 1,
+      "distanceKm": 5.13,
+      "durationMinutes": 29.7,
+      "paceSecondsPerKm": 346.8,
+      "paceText": "5'47\"/km",
+      "climbMeters": 10,
+      "runIds": [
+        "20261028户外跑步"
+      ]
+    },
+    {
+      "from": "2026-11-01",
+      "to": "2026-11-01",
+      "label": "2026-11-01",
+      "runCount": 1,
+      "distanceKm": 10.7,
+      "durationMinutes": 61.6,
+      "paceSecondsPerKm": 345.5,
+      "paceText": "5'46\"/km",
+      "climbMeters": 65.3,
+      "runIds": [
+        "20261101户外跑步"
+      ]
+    },
+    {
+      "from": "2026-11-03",
+      "to": "2026-11-03",
+      "label": "2026-11-03",
+      "runCount": 1,
+      "distanceKm": 8.27,
+      "durationMinutes": 47.7,
+      "paceSecondsPerKm": 345.9,
+      "paceText": "5'46\"/km",
+      "climbMeters": 15.8,
+      "runIds": [
+        "20261103户外跑步"
+      ]
+    },
+    {
+      "from": "2026-11-04",
+      "to": "2026-11-04",
+      "label": "2026-11-04",
+      "runCount": 1,
+      "distanceKm": 7.26,
+      "durationMinutes": 41.9,
+      "paceSecondsPerKm": 346.2,
+      "paceText": "5'46\"/km",
+      "climbMeters": 13.6,
+      "runIds": [
+        "20261104户外跑步"
+      ]
+    }
+  ],
+  "days": [
+    {
+      "date": "2026-10-25",
+      "runCount": 1,
+      "distanceKm": 7.12,
+      "durationMinutes": 40.8,
+      "paceSecondsPerKm": 343.7,
+      "paceText": "5'44\"/km",
+      "climbMeters": 10.1,
+      "runIds": [
+        "20261025户外跑步"
+      ]
+    },
+    {
+      "date": "2026-10-27",
+      "runCount": 1,
+      "distanceKm": 7.06,
+      "durationMinutes": 40.1,
+      "paceSecondsPerKm": 340.9,
+      "paceText": "5'41\"/km",
+      "climbMeters": 19.4,
+      "runIds": [
+        "20261027户外跑步"
+      ]
+    },
+    {
+      "date": "2026-10-28",
+      "runCount": 1,
+      "distanceKm": 5.13,
+      "durationMinutes": 29.7,
+      "paceSecondsPerKm": 346.8,
+      "paceText": "5'47\"/km",
+      "climbMeters": 10,
+      "runIds": [
+        "20261028户外跑步"
+      ]
+    },
+    {
+      "date": "2026-11-01",
+      "runCount": 1,
+      "distanceKm": 10.7,
+      "durationMinutes": 61.6,
+      "paceSecondsPerKm": 345.5,
+      "paceText": "5'46\"/km",
+      "climbMeters": 65.3,
+      "runIds": [
+        "20261101户外跑步"
+      ]
+    },
+    {
+      "date": "2026-11-03",
+      "runCount": 1,
+      "distanceKm": 8.27,
+      "durationMinutes": 47.7,
+      "paceSecondsPerKm": 345.9,
+      "paceText": "5'46\"/km",
+      "climbMeters": 15.8,
+      "runIds": [
+        "20261103户外跑步"
+      ]
+    },
+    {
+      "date": "2026-11-04",
+      "runCount": 1,
+      "distanceKm": 7.26,
+      "durationMinutes": 41.9,
+      "paceSecondsPerKm": 346.2,
+      "paceText": "5'46\"/km",
+      "climbMeters": 13.6,
+      "runIds": [
+        "20261104户外跑步"
+      ]
+    }
+  ],
+  "recordedDays": 6
+}
