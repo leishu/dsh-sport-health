@@ -77,6 +77,22 @@ const range = computed<string | undefined>(() => data.value?.consistency?.range
 const [from, to] = [computed(() => splitRange(range.value)[0]), computed(() => splitRange(range.value)[1])]
 const offline = computed(() => data.value === null || (data.value.ok === false && !data.value.summary))
 
+/**
+ * 面板为空时给出可操作的原因，而不是一句「暂无数据」。
+ *
+ * 最容易踩的一种空是**主进程还在跑旧版插件**：client bundle 会随 `web boot`
+ * 重新拉取，host 侧 `inject: ['webServer']` 的模块却只在进程启动时加载一次。
+ * 结果是新面板出现了，聚合体里却没有对应的数据段 —— 界面上的「空」和「工具
+ * 报错」长得一模一样。所以这里把三种情况拆开说。
+ */
+function missingNote(tool: string, label: string): string {
+  if (!data.value) return `正在加载${label}…`
+  const hit = (Array.isArray(data.value.errors) ? data.value.errors : []).find(item => item?.tool === tool)
+  if (hit) return `${label}暂不可用：${hit.message}`
+  if (data.value.ok === false) return `${label}暂不可用：无法连接 sport-health MCP 服务`
+  return `${label}数据未返回。若界面是刚更新过的，请完整重启 DSH —— host 侧的聚合代码只在进程启动时加载。`
+}
+
 const dailyGroups = computed<any[]>(() => (Array.isArray(data.value?.daily?.groups) ? data.value!.daily.groups : []))
 const mixTypes = computed<any[]>(() => (Array.isArray(data.value?.mix?.types) ? data.value!.mix.types : []))
 const consistency = computed(() => data.value?.consistency)
@@ -190,6 +206,14 @@ const trendOngoingNote = computed(() => {
   return `本周进行中：已跑 ${week.runCount ?? 0} 次 ${fmt(week.distanceKm)} km，未计入环比`
 })
 
+/** 趋势图空态：区分「数据段没返回」和「周数确实不够」。 */
+const trendNote = computed(() => {
+  if (!Array.isArray(data.value?.trend?.periods)) {
+    return missingNote('get_training_trend', '周跑量趋势')
+  }
+  return '至少需要两周记录才能呈现趋势'
+})
+
 function percentOf(current: number | null | undefined, base: number | null | undefined): number | null {
   if (!base || current === null || current === undefined) return null
   return ((current - base) / base) * 100
@@ -228,9 +252,20 @@ const raceCards = computed<RaceCard[]>(() => {
 const racesActualLabel = computed(() => raceCards.value.filter(card => card.actual).map(card => card.label).join('、'))
 const raceReference = computed(() => {
   const range = data.value?.predictions?.range
+  // 没有卡片时不给副标题，否则空面板顶上还挂着一句「全部为 Riegel 外推」，
+  // 看起来像是渲染失败而不是没数据。
+  if (!raceCards.value.length) return undefined
   return racesActualLabel.value && range
     ? `${range} 内 ${racesActualLabel.value} 为实测成绩，更远距离为 Riegel 外推`
     : '全部为 Riegel 外推，距离越远误差越大'
+})
+
+/** 预测面板空态：数据段没返回 / 区间内没有可用记录，是两件不同的事。 */
+const raceNote = computed(() => {
+  if (!Array.isArray(data.value?.predictions?.predictions)) {
+    return missingNote('predict_race_time', '比赛成绩预测')
+  }
+  return '区间内没有可用于预测的跑步记录'
 })
 
 /* ── 天气影响（get_weather_impact） ────────────────────────────────────── */
@@ -258,6 +293,12 @@ const weatherCorrelation = computed(() => {
   const strength = Math.abs(value)
   const level = strength >= 0.6 ? '明显' : strength >= 0.3 ? '中等' : '很弱'
   return { value, text: `气温与配速相关 ${value.toFixed(2)}（${level}）` }
+})
+
+/** 天气面板空态：没返回数据段，和「返回了但天气未回填」，是两个不同的下一步。 */
+const weatherNote = computed(() => {
+  if (!weatherData.value) return missingNote('get_weather_impact', '天气影响')
+  return '暂无可用的天气分组。若刚同步过新记录，先回到对话里跑一次 reload_data 回填天气。'
 })
 </script>
 
@@ -329,7 +370,7 @@ const weatherCorrelation = computed(() => {
             :show-values="true"
             :height="150"
           />
-          <p v-else class="sh-note">至少需要两周记录才能呈现趋势</p>
+          <p v-else class="sh-note">{{ trendNote }}</p>
           <p v-if="trendOngoingNote" class="sh-note">{{ trendOngoingNote }}</p>
         </ShPanel>
 
@@ -384,7 +425,7 @@ const weatherCorrelation = computed(() => {
               v-if="raceCards.length"
               :items="raceCards.map(card => ({ label: card.label, value: card.value, hint: `${card.hint} · 置信度 ${card.confidence}`, tone: card.tone }))"
             />
-            <p v-else class="sh-note">暂无预测数据</p>
+            <p v-else class="sh-note">{{ raceNote }}</p>
           </ShPanel>
 
           <ShPanel title="天气对配速的影响" :subtitle="weatherAvailable ? `基线 ${weatherBaseline} · ${weatherSample} 次` : undefined">
@@ -399,9 +440,7 @@ const weatherCorrelation = computed(() => {
               :format="(value: number) => fmtPaceDelta(value)"
               :height="150"
             />
-            <p v-else class="sh-note">
-              暂无天气数据。若刚同步过新记录，先回到对话里跑一次 <code>reload_data</code> 回填天气。
-            </p>
+            <p v-else class="sh-note">{{ weatherNote }}</p>
             <p v-if="weatherAvailable" class="sh-note">
               正值表示比整体平均更慢，负值更快。样本少时差异多来自当次强度，而不是天气。
             </p>

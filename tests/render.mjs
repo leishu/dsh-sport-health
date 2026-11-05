@@ -283,11 +283,15 @@ await check('error state', async () => {
 
 /** The dashboard fetches its snapshot; serve the captured overview fixture. */
 const overview = JSON.parse(readFileSync(join(root, 'tests/fixtures/api-overview.json'), 'utf8'))
-window.fetch = async () => new Response(JSON.stringify(overview), {
-  status: 200,
-  headers: { 'content-type': 'application/json' },
-})
-globalThis.fetch = window.fetch
+const serveOverview = payload => {
+  const fetchImpl = async () => new Response(JSON.stringify(payload), {
+    status: 200,
+    headers: { 'content-type': 'application/json' },
+  })
+  window.fetch = fetchImpl
+  globalThis.fetch = fetchImpl
+}
+serveOverview(overview)
 
 await check('dashboard', async () => {
   const view = renderReact(dashboard, { inspectCall() {}, openView() {}, viewRequest: undefined })
@@ -320,6 +324,31 @@ await check('dashboard renders trend, race predictions and weather', async () =>
   if (!html.includes('秒/km')) throw new Error('weather panel did not render pace deltas')
 
   view.destroy()
+})
+
+/**
+ * 回归护栏：聚合体里少了某个数据段时，面板必须**说出原因**。
+ *
+ * 真实故障就长这样 —— client bundle 随 `web boot` 更新了，host 模块还停在
+ * 旧进程里，于是新面板出现、聚合体没有对应键。只显示「暂无数据」的话，
+ * 看起来和「渲染挂了」一模一样，只能靠猜。
+ */
+await check('missing dashboard sections explain themselves', async () => {
+  const stale = { ...overview }
+  delete stale.trend
+  delete stale.predictions
+  serveOverview(stale)
+  try {
+    const view = renderReact(dashboard, {})
+    await flush()
+    const html = view.element.innerHTML
+    if (!html.includes('周跑量趋势数据未返回')) throw new Error('trend panel should name the missing section')
+    if (!html.includes('比赛成绩预测数据未返回')) throw new Error('race panel should name the missing section')
+    if (!html.includes('重启 DSH')) throw new Error('missing-section note must point at restarting the host process')
+    view.destroy()
+  } finally {
+    serveOverview(overview)
+  }
 })
 
 await check('slot entries are React components', async () => {
