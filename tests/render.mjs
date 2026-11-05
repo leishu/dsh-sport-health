@@ -298,6 +298,30 @@ await check('dashboard', async () => {
   view.destroy()
 })
 
+await check('dashboard renders trend, race predictions and weather', async () => {
+  // 三个面板都来自 overview 的新 section。断言「标题 + 真实数值」而不是只断言
+  // 标题，否则数据没接上时面板会空着嘴通过。
+  const view = renderReact(dashboard, {})
+  await flush()
+  const html = view.element.innerHTML
+
+  if (!html.includes('周跑量趋势')) throw new Error('trend panel title missing')
+  // 夹具里最后一个完整周是 10-26 ~ 11-01，22.89 km。
+  if (!html.includes('22.9')) throw new Error('trend panel did not render the last complete week')
+  if (!html.includes('本周进行中')) throw new Error('ongoing-week note missing — partial week must be called out')
+
+  if (!html.includes('比赛成绩预测')) throw new Error('race prediction panel title missing')
+  for (const label of ['5K', '10K', '半马', '全马']) {
+    if (!html.includes(label)) throw new Error(`race prediction missing ${label}`)
+  }
+  if (!html.includes('置信度 高')) throw new Error('prediction confidence missing')
+
+  if (!html.includes('天气对配速的影响')) throw new Error('weather panel title missing')
+  if (!html.includes('秒/km')) throw new Error('weather panel did not render pace deltas')
+
+  view.destroy()
+})
+
 await check('slot entries are React components', async () => {
   // 回归护栏：渲染器按 `jsx(Comp, props)` 挂载，组件必须**返回 React 元素**。
   // 早期适配器返回 DOM 节点，React 抛 error #31，整个 conversation.view 崩成空白。

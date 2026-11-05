@@ -166,6 +166,26 @@ await check('overview assembles every dashboard section', async () => {
   assert.ok(Array.isArray(body.runs.runs))
 })
 
+await check('overview carries the weekly trend and race predictions', async () => {
+  // 这两个 section 是后来加的：early return 之类的回归不该让它们悄悄消失，
+  // 否则前端只会渲染出空面板，而 `ok` 依然是 true。
+  const { body } = await get('/sport-health/api/overview')
+  assert.ok(body.trend, 'trend section missing')
+  assert.ok(Array.isArray(body.trend.periods), 'trend.periods must be an array')
+  assert.ok(body.predictions, 'predictions section missing')
+  assert.ok(Array.isArray(body.predictions.predictions), 'predictions.predictions must be an array')
+  assert.ok(body.predictions.predictions.length > 0, 'predictions must not be empty')
+  // 天气是 dashboard 的第三个新面板，同样别让它退回「拉了但没用」。
+  assert.ok(body.weather, 'weather section missing')
+  assert.ok(Array.isArray(body.weather.temperatureBuckets), 'weather.temperatureBuckets must be an array')
+})
+
+await check('overview asks the trend for weekly buckets', async () => {
+  await get('/sport-health/api/overview')
+  const trendCall = calls.filter(call => call.name === 'get_training_trend').at(-1)
+  assert.deepEqual(trendCall?.args, { period: 'week', count: 8 })
+})
+
 await check('runs forwards paging and sorting arguments', async () => {
   calls.length = 0
   const { status, body } = await get('/sport-health/api/runs?limit=3&offset=2&sortBy=distance')

@@ -33,7 +33,7 @@ export function createSportHealthApi(client: McpHttpClient, config: SportHealthA
     async overview(refresh = false): Promise<Record<string, unknown>> {
       if (refresh) client.clearCache()
       const errors: ApiError[] = []
-      const [summary, daily, mix, consistency, load, bests, weather, runs] = await Promise.all([
+      const [summary, daily, mix, consistency, load, bests, weather, runs, trend, predictions] = await Promise.all([
         capture(errors, 'get_running_summary', () => client.callTool('get_running_summary')),
         capture(errors, 'get_daily_running', () => client.callTool('get_daily_running', { groupBy: 'day' })),
         capture(errors, 'get_training_mix', () => client.callTool('get_training_mix')),
@@ -42,9 +42,16 @@ export function createSportHealthApi(client: McpHttpClient, config: SportHealthA
         capture(errors, 'get_personal_bests', () => client.callTool('get_personal_bests', { category: 'all' })),
         capture(errors, 'get_weather_impact', () => client.callTool('get_weather_impact')),
         capture(errors, 'list_runs', () => client.callTool('list_runs', { limit: 20, sortBy: 'date' })),
+        // Weekly rollup: the dashboard's "this week vs last week" strip reads
+        // the last two periods from here instead of aggregating daily buckets.
+        capture(errors, 'get_training_trend', () => client.callTool('get_training_trend', { period: 'week', count: 8 })),
+        // Riegel projections for the race-time panel. No `distanceKm` asks for
+        // the standard 5K / 10K / half / full ladder in one call.
+        capture(errors, 'predict_race_time', () => client.callTool('predict_race_time')),
       ])
 
-      const available = [summary, daily, mix, consistency, load, bests, weather, runs].filter(value => value !== undefined)
+      const available = [summary, daily, mix, consistency, load, bests, weather, runs, trend, predictions]
+        .filter(value => value !== undefined)
       return {
         ok: available.length > 0,
         url: config.url,
@@ -57,6 +64,8 @@ export function createSportHealthApi(client: McpHttpClient, config: SportHealthA
         bests,
         weather,
         runs,
+        trend,
+        predictions,
         errors,
         ...(available.length === 0 ? { error: errors[0]?.message ?? '无法连接 sport-health MCP 服务' } : {}),
       }
