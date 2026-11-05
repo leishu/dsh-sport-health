@@ -333,7 +333,8 @@ await check('dashboard renders trend, race predictions and weather', async () =>
  * 旧进程里，于是新面板出现、聚合体没有对应键。只显示「暂无数据」的话，
  * 看起来和「渲染挂了」一模一样，只能靠猜。
  */
-await check('missing dashboard sections explain themselves', async () => {
+await check('empty dashboard sections explain themselves', async () => {
+  // 缺数据段时不能静默空着，要给出该面板自己的空态文案。
   const stale = { ...overview }
   delete stale.trend
   delete stale.predictions
@@ -342,12 +343,20 @@ await check('missing dashboard sections explain themselves', async () => {
     const view = renderReact(dashboard, {})
     await flush()
     const html = view.element.innerHTML
-    if (!html.includes('周跑量趋势数据未返回')) throw new Error('trend panel should name the missing section')
-    if (!html.includes('比赛成绩预测数据未返回')) throw new Error('race panel should name the missing section')
-    // 空态必须把实际收到的 section 打出来，否则「旧 host」和「真的没数据」无法区分。
-    if (!html.includes('本次响应包含 summary')) throw new Error('missing-section note should list the sections that did arrive')
-    if (html.includes('本次响应包含 trend')) throw new Error('the note must not claim a section that is absent')
-    if (!html.includes('完整退出 DSH')) throw new Error('missing-section note must say how to restart the host process')
+    if (!html.includes('暂无趋势数据')) throw new Error('trend panel needs an empty-state note')
+    if (!html.includes('暂无预测数据')) throw new Error('race panel needs an empty-state note')
+    view.destroy()
+  } finally {
+    serveOverview(overview)
+  }
+
+  // 工具真的报错时，空态必须把错误带出来 —— 只写「暂无数据」分不清是没数据还是接口挂了。
+  serveOverview({ ...overview, predictions: undefined, errors: [{ tool: 'predict_race_time', message: 'boom' }] })
+  try {
+    const view = renderReact(dashboard, {})
+    await flush()
+    const html = view.element.innerHTML
+    if (!html.includes('暂不可用：boom')) throw new Error('tool error must surface in the empty state')
     view.destroy()
   } finally {
     serveOverview(overview)
