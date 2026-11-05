@@ -344,7 +344,10 @@ await check('missing dashboard sections explain themselves', async () => {
     const html = view.element.innerHTML
     if (!html.includes('周跑量趋势数据未返回')) throw new Error('trend panel should name the missing section')
     if (!html.includes('比赛成绩预测数据未返回')) throw new Error('race panel should name the missing section')
-    if (!html.includes('重启 DSH')) throw new Error('missing-section note must point at restarting the host process')
+    // 空态必须把实际收到的 section 打出来，否则「旧 host」和「真的没数据」无法区分。
+    if (!html.includes('本次响应包含 summary')) throw new Error('missing-section note should list the sections that did arrive')
+    if (html.includes('本次响应包含 trend')) throw new Error('the note must not claim a section that is absent')
+    if (!html.includes('完整退出 DSH')) throw new Error('missing-section note must say how to restart the host process')
     view.destroy()
   } finally {
     serveOverview(overview)

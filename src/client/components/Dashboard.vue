@@ -77,20 +77,37 @@ const range = computed<string | undefined>(() => data.value?.consistency?.range
 const [from, to] = [computed(() => splitRange(range.value)[0]), computed(() => splitRange(range.value)[1])]
 const offline = computed(() => data.value === null || (data.value.ok === false && !data.value.summary))
 
+/** 聚合体里应该出现的 section，顺序与 host 侧 `overview()` 一致。 */
+const SECTION_KEYS = ['summary', 'daily', 'mix', 'consistency', 'load', 'bests', 'weather', 'runs', 'trend', 'predictions']
+
+/**
+ * 响应里实际存在的 section。
+ *
+ * 空态时一并打出来，是因为「空」有两种来源，长相完全一致：数据段确实没有
+ * 内容，或者 host 侧压根没返回这个键（旧进程）。把收到的键列出来，一眼就
+ * 能分辨，不用再靠猜。
+ */
+const receivedSections = computed(() => {
+  const raw = data.value as Record<string, unknown> | null | undefined
+  if (!raw) return ''
+  return SECTION_KEYS.filter(key => raw[key] !== undefined && raw[key] !== null).join('、')
+})
+
 /**
  * 面板为空时给出可操作的原因，而不是一句「暂无数据」。
  *
- * 最容易踩的一种空是**主进程还在跑旧版插件**：client bundle 会随 `web boot`
+ * 最容易踩的一种空是**主进程还在跑旧版插件**：client bundle 会随页面刷新
  * 重新拉取，host 侧 `inject: ['webServer']` 的模块却只在进程启动时加载一次。
- * 结果是新面板出现了，聚合体里却没有对应的数据段 —— 界面上的「空」和「工具
- * 报错」长得一模一样。所以这里把三种情况拆开说。
+ * 而且关窗口通常不会结束那个进程，所以「我重启过了」也可能仍然无效。这里
+ * 把三种情况拆开说，并把实际收到的 section 打出来当证据。
  */
 function missingNote(tool: string, label: string): string {
   if (!data.value) return `正在加载${label}…`
   const hit = (Array.isArray(data.value.errors) ? data.value.errors : []).find(item => item?.tool === tool)
   if (hit) return `${label}暂不可用：${hit.message}`
   if (data.value.ok === false) return `${label}暂不可用：无法连接 sport-health MCP 服务`
-  return `${label}数据未返回。若界面是刚更新过的，请完整重启 DSH —— host 侧的聚合代码只在进程启动时加载。`
+  const seen = receivedSections.value ? `本次响应包含 ${receivedSections.value}` : '本次响应没有任何数据段'
+  return `${label}数据未返回（${seen}）。若界面刚更新过，请完整退出 DSH —— 关窗口不会重启 host 进程，要从托盘退出或结束 DSH 进程。`
 }
 
 const dailyGroups = computed<any[]>(() => (Array.isArray(data.value?.daily?.groups) ? data.value!.daily.groups : []))
