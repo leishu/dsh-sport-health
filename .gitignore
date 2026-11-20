@@ -21,6 +21,9 @@ node_modules/
 .DS_Store
 Thumbs.db
 
+# tests 目录下的 JSON 测试数据（不进版本库）
+tests/**/*.json
+
 # 日志与临时文件
 *.log
 npm-debug.log*

@@ -135,7 +135,7 @@ const ctx = {
 }
 out.apply(ctx)
 
-if (toolviews.size !== 20) throw new Error(`expected 20 toolviews, got ${toolviews.size}`)
+if (toolviews.size !== 42) throw new Error(`expected 42 toolviews, got ${toolviews.size}`)
 if (typeof dashboard !== 'function') throw new Error('dashboard view was not registered')
 
 /* ── stylesheet injection ──────────────────────────────────────────────── */
@@ -276,6 +276,29 @@ const TOOLVIEW_PROBES = {
   list_runs: ['单次距离', '跑步明细'],
   predict_race_time: ['预测成绩'],
   reload_data: ['记录数', '扫描文件'],
+  // MCP 服务新功能（fixtures 里选出一个真实值作为探针）
+  get_run_summary_data: ['8.29', "5'46\"/km"],
+  get_run_streams: ['b-p-m', 'pm2', 'evt'],
+  get_running_dynamics: ['触地时间', '垂直振幅', '左右平衡', '步频'],
+  get_run_level: ['华为跑力', '有氧耐力', '官方成绩'],
+  get_official_splits: ['官方快 36 秒/公里', "5'46\"/km"],
+  sync_weather: ['天气覆盖率', '已有天气', '覆盖率'],
+  get_heart_rate_series: ['采样点', '心率曲线'],
+  get_sleep_summary: ['7h 1m', '睡眠分期'],
+  get_sleep_detail: ['卧床时长', '各阶段时长', '分期时间线', '醒来时刻'],
+  get_sleep_trend: ['主指标', '方向', '周度睡眠趋势'],
+  get_recovery_status: ['今日步数 69', 'ACWR 1.08', '恢复建议'],
+  get_daily_vitals: ['静息心率', 'HRV RMSSD', 'VO2max'],
+  get_hrv_trend: ['平均 RMSSD', '方向', 'r²'],
+  get_stress_series: ['压力等级', '压力曲线', '档位样本分布'],
+  get_blood_oxygen: ['记录数', '记录天数', '低氧事件'],
+  get_daily_activity: ['总步数', '中位步数', '目标达成'],
+  get_activity_minutes: ['当天步数', '活动分钟', '站立次数'],
+  get_weekly_health_report: ['总步数', '本周健康周报'],
+  get_medals: ['B1', 'AAA', 'gainCount'],
+  get_ecg_records: ['ECG 记录', '心律失常类型', 'recordId'],
+  get_sample_sequences: ['样本记录', 'typeCode', 'recordId'],
+  get_body_composition: ['称重记录', '186cm · 男'],
 }
 
 for (const file of fixtures) {

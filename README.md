@@ -4,7 +4,7 @@ DeepSeek Harness 插件：把 [`sport-health-mcp-server`](https://github.com/lei
 
 技术栈：Vue 3 + Element Plus 2 + ECharts 6（Vite 构建）。
 
-- **20 个工具卡片**：每次模型调用 `mcp__sport_health__*` 工具，结果都会渲染成对应的图表卡片，而不是一大段 JSON。
+- **42 个工具卡片**：每次模型调用 `mcp__sport_health__*` 工具，结果都会渲染成对应的图表卡片，而不是一大段 JSON。
 - **“运动健康”会话视图**：一个独立标签页，直接从 MCP 服务拉取快照，展示跑量、训练类型、连续性、ACWR 负荷、个人最佳和近期跑步。
 - **只读看板接口**：host 半在 `/sport-health/api/*` 暴露同源只读 JSON，不转发任意 MCP 工具，也不提供写入入口。
 
@@ -19,7 +19,7 @@ npm run preview
 # 打开 http://127.0.0.1:3100/preview/
 ```
 
-预览页用 `tests/fixtures/` 中**真实 MCP 返回**渲染 20 个 toolview，并加载 `tests/fixtures/api-overview.json` 渲染看板视图。它只是开发工具，不参与 Harness 运行时。
+预览页用 `tests/fixtures/` 中**真实 MCP 返回**渲染 42 个 toolview，并加载 `tests/fixtures/api-overview.json` 渲染看板视图。它只是开发工具，不参与 Harness 运行时。
 
 ## 架构
 
@@ -31,7 +31,7 @@ dsh-sport-health
 ├─ vite.config.ts            双模式构建（client UMD / host ESM）
 ├─ src/host/                 Node 半：MCP HTTP 客户端 + /sport-health/api
 └─ src/client/               浏览器半：Vue 3 组件（toolview + 看板）
-   ├─ index.ts              注册 20 个 toolview 和 1 个 conversation.view
+   ├─ index.ts              注册 42 个 toolview 和 1 个 conversation.view
    ├─ lib/                  载荷解析、格式化、主题变量、ECharts option 构造
    └─ components/
       ├─ ToolCard.vue       卡片外壳（标题、状态、失败态、原始 JSON）
@@ -213,6 +213,33 @@ DSH_HOME=/tmp/dsh-test-home dsh --profile test --no-open --port 3099
 | `describe_data_source` | 数据源 `ElDescriptions` + 质量告警 + 文件标签 |
 | `reload_data` | 同步结果 KPI |
 
+MCP 服务（sport-health-mcp-server）近期新增的 22 个工具，同样有各自的卡片视图：
+
+| MCP 工具 | 图表呈现 |
+| --- | --- |
+| `get_run_summary_data` | 华为 summaryData 换算 KPI + km 分段表 |
+| `get_run_streams` | 流目录 / 流行数据表（rs / rp / pm2 / p-m / bpm2 / evt…） |
+| `get_running_dynamics` | 跑姿 KPI + 分段配速柱 + 前后半程差值 |
+| `get_run_level` | 华为官方跑力 KPI + A/E/I/M/R 五档配速表 + 官方成绩表 + 跑力趋势 |
+| `get_official_splits` | 官方分段与 GPS 逐段对照表 + 差值 + 结论 |
+| `sync_weather` | 补天气结果 KPI + 问题明细 + 覆盖率 |
+| `get_heart_rate_series` | 全天心率 KPI + 分桶曲线 + 当天运动段 |
+| `get_sleep_summary` | 睡眠 KPI + 每夜/周期表 + 数据覆盖说明 |
+| `get_sleep_detail` | 卧床/睡眠时长 KPI + 各阶段时长柱 + 分期时间线 + 醒来时刻 + 碎片说明 |
+| `get_sleep_trend` | 主指标趋势 KPI + 拟合线 |
+| `get_recovery_status` | 恢复状态 KPI + 恢复建议 |
+| `get_daily_vitals` | 体征 KPI + 指标统计表 + 逐日/按周期 |
+| `get_hrv_trend` | HRV 趋势 KPI + 睡眠口径线图 |
+| `get_stress_series` | 压力曲线 + 档位样本分布 |
+| `get_blood_oxygen` | 血氧记录 KPI + 每日表 + 设备低氧提醒 |
+| `get_daily_activity` | 步数 KPI + 每日柱状 + 目标达成 + 末 7 天变化 |
+| `get_activity_minutes` | 当天步数/中高强度/站立次数 KPI + 类型表 + 连续段 |
+| `get_weekly_health_report` | 周健康报告 KPI + 文案 |
+| `get_medals` | 体育勋章表（类型/等级/获得次数/最近获得） |
+| `get_ecg_records` | ECG 记录表 |
+| `get_sample_sequences` | 样本序列元数据表 |
+| `get_body_composition` | 体脂秤配置（多用户警示）或明细 + 区间变化 + 按月均值 |
+
 所有卡片底部都有可折叠的 **原始数据**，方便核对。视图按工具名分派（`TOOL_VIEW_BY_TOOL`），只有工具名缺失时才回退到按载荷结构猜测——几个工具的返回字段会互相重叠（如 `get_training_mix` 也带 `runs`），按字段猜会选错分支。
 
 ## 看板接口
@@ -236,13 +263,13 @@ DSH_HOME=/tmp/dsh-test-home dsh --profile test --no-open --port 3099
 npm run build      # 构建 host + client
 npm run dev        # 监听 src/ 增量构建（client + host 两个 watcher）
 npm run typecheck  # vue-tsc --noEmit（含 SFC 模板类型检查）
-npm test           # 20 个 toolview + pending/error 状态 + host 路由端到端
+npm test           # 42 个 toolview + pending/error 状态 + host 路由端到端
 npm run preview    # 静态预览页（端口 3100）
 ```
 
 ### 测试
 
-- `tests/render.mjs`：在 jsdom 里加载 `lib/client.js`，用 `tests/fixtures/` 中 20 份真实 MCP 返回逐个挂载 toolview，并检查调用中/失败/看板加载态；出现 Vue 警告即失败。
+- `tests/render.mjs`：在 jsdom 里加载 `lib/client.js`，用 `tests/fixtures/` 中 42 份真实 MCP 返回逐个挂载 toolview，并检查调用中/失败/看板加载态；出现 Vue 警告即失败。
 - `tests/host.mjs`：启动本地 mock MCP 服务，验证会话初始化、工具发现、工具调用、参数转发、错误码以及 session 过期后的重连重放。
 - `tests/fixtures/`：真实服务返回；`api-overview.json` 是看板快照。
 

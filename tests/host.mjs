@@ -20,7 +20,7 @@ for (const file of readdirSync(join(root, 'tests/fixtures'))) {
   const match = /^sport-(.+)\.json$/.exec(file)
   if (match) fixtures.set(match[1], JSON.parse(readFileSync(join(root, 'tests/fixtures', file), 'utf8')))
 }
-assert.equal(fixtures.size, 20, 'expected 20 tool fixtures')
+assert.equal(fixtures.size, 42, 'expected 42 tool fixtures')
 
 const calls = []
 let sessionCounter = 0
@@ -146,11 +146,11 @@ await check('index lists the dashboard endpoints', async () => {
   assert.deepEqual(body.endpoints.length, 4)
 })
 
-await check('health reports all 20 MCP tools', async () => {
+await check('health reports all 42 MCP tools', async () => {
   const { status, body } = await get('/sport-health/api/health')
   assert.equal(status, 200)
   assert.equal(body.ok, true)
-  assert.equal(body.toolCount, 20)
+  assert.equal(body.toolCount, 42)
   assert.ok(body.tools.includes('get_running_summary'))
 })
 

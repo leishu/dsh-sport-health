@@ -9,6 +9,14 @@ export const TOOL_NAMES = [
   'get_running_summary', 'get_stop_points', 'get_training_load',
   'get_training_mix', 'get_training_trend', 'get_weather_impact', 'list_runs',
   'predict_race_time', 'reload_data',
+  // ── MCP 服务新功能（sport-health-mcp-server 新增工具） ──
+  'get_run_summary_data', 'get_run_streams', 'get_running_dynamics',
+  'get_run_level', 'get_official_splits', 'sync_weather',
+  'get_heart_rate_series', 'get_sleep_summary', 'get_sleep_detail',
+  'get_sleep_trend', 'get_recovery_status', 'get_daily_vitals',
+  'get_hrv_trend', 'get_stress_series', 'get_blood_oxygen',
+  'get_daily_activity', 'get_activity_minutes', 'get_weekly_health_report',
+  'get_medals', 'get_ecg_records', 'get_sample_sequences', 'get_body_composition',
 ] as const
 
 export const TOOL_VIEW_KEYS = TOOL_NAMES.map(tool => `mcp__${SERVER_NAME}__${tool}`)
@@ -34,6 +42,29 @@ export const TITLES: Record<string, string> = {
   list_runs: '跑步记录',
   predict_race_time: '比赛成绩预测',
   reload_data: '数据同步',
+  // ── MCP 服务新功能 ──
+  get_run_summary_data: '华为 summaryData',
+  get_run_streams: '原始数据流',
+  get_running_dynamics: '跑姿与步幅',
+  get_run_level: '华为官方跑力',
+  get_official_splits: '官方分段对比',
+  sync_weather: '天气补齐',
+  get_heart_rate_series: '动态心率',
+  get_sleep_summary: '睡眠概览',
+  get_sleep_detail: '睡眠详情',
+  get_sleep_trend: '睡眠趋势',
+  get_recovery_status: '恢复状态',
+  get_daily_vitals: '每日体征',
+  get_hrv_trend: 'HRV 趋势',
+  get_stress_series: '压力曲线',
+  get_blood_oxygen: '血氧记录',
+  get_daily_activity: '日常活动量',
+  get_activity_minutes: '分钟级活动',
+  get_weekly_health_report: '周健康报告',
+  get_medals: '体育勋章',
+  get_ecg_records: 'ECG 记录',
+  get_sample_sequences: '样本序列',
+  get_body_composition: '体成分',
 }
 
 export const ICONS: Record<string, string> = {
@@ -43,6 +74,14 @@ export const ICONS: Record<string, string> = {
   get_run_splits: '📊', get_running_summary: '📈', get_stop_points: '⏸️',
   get_training_load: '🧮', get_training_mix: '🥧', get_training_trend: '📉',
   get_weather_impact: '🌤️', list_runs: '📋', predict_race_time: '⏱️', reload_data: '🔄',
+  get_run_summary_data: '📋', get_run_streams: '🌀', get_running_dynamics: '🏃',
+  get_run_level: '🏆', get_official_splits: '📏', sync_weather: '☁️',
+  get_heart_rate_series: '❤️', get_sleep_summary: '😴', get_sleep_detail: '🌙',
+  get_sleep_trend: '📈', get_recovery_status: '🔋', get_daily_vitals: '🩸',
+  get_hrv_trend: '📉', get_stress_series: '😰', get_blood_oxygen: '💨',
+  get_daily_activity: '🚶', get_activity_minutes: '⏱️', get_weekly_health_report: '📅',
+  get_medals: '🎖️', get_ecg_records: '🩺', get_sample_sequences: '📥',
+  get_body_composition: '⚖️',
 }
 
 /** Result payload plus the textual fallback the MCP bridge recorded. */
