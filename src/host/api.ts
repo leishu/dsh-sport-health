@@ -33,7 +33,12 @@ export function createSportHealthApi(client: McpHttpClient, config: SportHealthA
     async overview(refresh = false): Promise<Record<string, unknown>> {
       if (refresh) client.clearCache()
       const errors: ApiError[] = []
-      const [summary, daily, mix, consistency, load, bests, weather, runs, trend, predictions] = await Promise.all([
+      const [
+        summary, daily, mix, consistency, load, bests, weather, runs, trend, predictions,
+        sleepSummary, sleepTrend, recovery, vitals, hrv, stress, bloodOxygen,
+        activity, activityMinutes, heartRate, bodyComposition, weeklyReport,
+        medals, ecg, runLevel, dynamics, officialSplits,
+      ] = await Promise.all([
         capture(errors, 'get_running_summary', () => client.callTool('get_running_summary')),
         capture(errors, 'get_daily_running', () => client.callTool('get_daily_running', { groupBy: 'day' })),
         capture(errors, 'get_training_mix', () => client.callTool('get_training_mix')),
@@ -48,10 +53,38 @@ export function createSportHealthApi(client: McpHttpClient, config: SportHealthA
         // Riegel projections for the race-time panel. No `distanceKm` asks for
         // the standard 5K / 10K / half / full ladder in one call.
         capture(errors, 'predict_race_time', () => client.callTool('predict_race_time')),
+        // Health side of the dashboard (Huawei data). Every tool is called with
+        // its defaults so it picks the server's latest window; run-scoped tools
+        // (splits, route, ECG detail…) stay behind the per-run endpoint.
+        capture(errors, 'get_sleep_summary', () => client.callTool('get_sleep_summary')),
+        capture(errors, 'get_sleep_trend', () => client.callTool('get_sleep_trend')),
+        capture(errors, 'get_recovery_status', () => client.callTool('get_recovery_status')),
+        capture(errors, 'get_daily_vitals', () => client.callTool('get_daily_vitals')),
+        capture(errors, 'get_hrv_trend', () => client.callTool('get_hrv_trend')),
+        capture(errors, 'get_stress_series', () => client.callTool('get_stress_series')),
+        capture(errors, 'get_blood_oxygen', () => client.callTool('get_blood_oxygen')),
+        capture(errors, 'get_daily_activity', () => client.callTool('get_daily_activity')),
+        capture(errors, 'get_activity_minutes', () => client.callTool('get_activity_minutes')),
+        capture(errors, 'get_heart_rate_series', () => client.callTool('get_heart_rate_series')),
+        // Without gender/height this returns the per-user config list plus an
+        // explicit "cannot merge" warning — exactly what the dashboard shows.
+        capture(errors, 'get_body_composition', () => client.callTool('get_body_composition')),
+        capture(errors, 'get_weekly_health_report', () => client.callTool('get_weekly_health_report')),
+        capture(errors, 'get_medals', () => client.callTool('get_medals', { limit: 20 })),
+        capture(errors, 'get_ecg_records', () => client.callTool('get_ecg_records', { limit: 20 })),
+        capture(errors, 'get_run_level', () => client.callTool('get_run_level', { includeHistory: true })),
+        // No runId → range/aggregate mode; the fixture keeps one run but both
+        // shapes are handled in the client.
+        capture(errors, 'get_running_dynamics', () => client.callTool('get_running_dynamics')),
+        capture(errors, 'get_official_splits', () => client.callTool('get_official_splits')),
       ])
 
-      const available = [summary, daily, mix, consistency, load, bests, weather, runs, trend, predictions]
-        .filter(value => value !== undefined)
+      const available = [
+        summary, daily, mix, consistency, load, bests, weather, runs, trend, predictions,
+        sleepSummary, sleepTrend, recovery, vitals, hrv, stress, bloodOxygen,
+        activity, activityMinutes, heartRate, bodyComposition, weeklyReport,
+        medals, ecg, runLevel, dynamics, officialSplits,
+      ].filter(value => value !== undefined)
       return {
         ok: available.length > 0,
         url: config.url,
@@ -66,6 +99,23 @@ export function createSportHealthApi(client: McpHttpClient, config: SportHealthA
         runs,
         trend,
         predictions,
+        sleepSummary,
+        sleepTrend,
+        recovery,
+        vitals,
+        hrv,
+        stress,
+        bloodOxygen,
+        activity,
+        activityMinutes,
+        heartRate,
+        bodyComposition,
+        weeklyReport,
+        medals,
+        ecg,
+        runLevel,
+        dynamics,
+        officialSplits,
         errors,
         ...(available.length === 0 ? { error: errors[0]?.message ?? '无法连接 sport-health MCP 服务' } : {}),
       }

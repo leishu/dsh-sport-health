@@ -248,14 +248,20 @@ MCP 服务（sport-health-mcp-server）近期新增的 22 个工具，同样有�
 | --- | --- |
 | `GET /sport-health/api` | 端点索引 |
 | `GET /sport-health/api/health` | MCP 连通性与工具列表 |
-| `GET /sport-health/api/overview` | 看板快照（summary/daily/mix/consistency/load/bests/weather/runs/trend/predictions） |
+| `GET /sport-health/api/overview` | 看板快照（跑步 10 段 + 健康 17 段：sleepSummary/sleepTrend/recovery/vitals/hrv/stress/bloodOxygen/activity/activityMinutes/heartRate/bodyComposition/weeklyReport/medals/ecg/runLevel/dynamics/officialSplits） |
 | `GET /sport-health/api/overview?refresh=1` | 清缓存后重新拉取 |
 | `GET /sport-health/api/runs?limit=20&offset=0&sortBy=date` | 分页跑步列表 |
 | `GET /sport-health/api/run?id=<runId>` | 单次跑步详情包（detail/splits/route/elevation/stops/classification） |
 
 接口只读、同源、`no-store`。看板会对每个工具单独容错：某个工具失败时其余区块仍然展示，并在“部分数据不可用”里列出错误。
 
-看板自上而下的区块：总览 KPI → **周跑量趋势**（环比/配速变化）→ 每日跑量 + 训练类型构成 → 训练连续性 + 训练负荷 → 个人最佳 → **比赛成绩预测** + **天气对配速的影响** → 近期跑步 → 部分数据不可用。
+看板自上而下的区块：
+
+- **跑步训练**：总览 KPI → 周跑量趋势（环比/配速变化）→ 每日跑量 + 训练类型构成 → 训练连续性 + 训练负荷 → 个人最佳 → 比赛成绩预测 + 天气对配速的影响 → 近期跑步。
+- **恢复与睡眠**：恢复状态（睡眠评分/HRV/静息心率/负荷风险）→ 睡眠概览 + 睡眠趋势（近 14 夜/近 12 周）。
+- **体征与活动**：每日体征 + HRV 趋势 → 压力曲线 + 血氧 → 日常活动 → 当天活动 + 心率曲线。
+- **身体与华为数据**：体成分（多用户配置警示）+ 周健康报告 → 华为跑力 + 跑姿 → 官方分段 → 体育勋章 + ECG 记录。
+- 末尾是「部分数据不可用」：某个工具失败只列出该工具，其余区块照常展示。
 
 ## 开发
 
@@ -273,7 +279,7 @@ npm run preview    # 静态预览页（端口 3100）
 - `tests/host.mjs`：启动本地 mock MCP 服务，验证会话初始化、工具发现、工具调用、参数转发、错误码以及 session 过期后的重连重放。
 - `tests/fixtures/`：真实服务返回；`api-overview.json` 是看板快照。
 
-重新抓取 fixtures 时，保持文件名为 `sport-<tool>.json`，渲染测试会自动发现。
+重新抓取 fixtures 时，保持文件名为 `sport-<tool>.json`，渲染测试会自动发现。看板快照 `tests/fixtures/api-overview.json` 是用这些单工具夹具拼的，改完夹具后跑 `node tests/make-overview.mjs` 重新生成（测试夹具按 `.gitignore` 规则不进版本库）。
 
 ## 故障排查
 
@@ -288,14 +294,21 @@ npm run preview    # 静态预览页（端口 3100）
 | 启动报 `web boot: 1 entry did not activate` + `dsh-sport-health: failed` | 插件条目激活失败，跟「界面」无关，先看 console 里紧随其后的真实异常（多为 `no React runtime`）。原因通常是 React 没在物化阶段取到；跑 `npm test`，`react resolved through factory` 这条就是守它的 |
 | 卡片有内容但完全没样式 | 检查 `<head>` 里是否有 `style[data-plugin-css="dsh-sport-health"]`。没有说明用的是旧产物，重新 `npm run build`；本项目**不会**产出可单独引用的 `lib/client.css` |
 
-### 打开「运动健康」为什么一次打 10 个工具
+### 打开「运动健康」为什么一次打 27 个工具
 
-看板不是「先问模型要数据」，而是 host 半对着 MCP 服务**并发拉一个聚合快照**（`src/host/api.ts` 的 `overview()`）：`get_running_summary`、`get_daily_running`、`get_training_mix`、`get_consistency`、`get_training_load`、`get_personal_bests`、`get_weather_impact`、`list_runs`、`get_training_trend`（`period=week, count=8`）、`predict_race_time`（不带 `distanceKm`，一次拿到 5K/10K/半马/全马）。
+看板不是「先问模型要数据」，而是 host 半对着 MCP 服务**并发拉一个聚合快照**（`src/host/api.ts` 的 `overview()`）。跑步部分 10 个：`get_running_summary`、`get_daily_running`、`get_training_mix`、`get_consistency`、`get_training_load`、`get_personal_bests`、`get_weather_impact`、`list_runs`、`get_training_trend`（`period=week, count=8`）、`predict_race_time`（不带 `distanceKm`，一次拿到 5K/10K/半马/全马）。健康部分 17 个：`get_sleep_summary`、`get_sleep_trend`、`get_recovery_status`、`get_daily_vitals`、`get_hrv_trend`、`get_stress_series`、`get_blood_oxygen`、`get_daily_activity`、`get_activity_minutes`、`get_heart_rate_series`、`get_body_composition`、`get_weekly_health_report`、`get_medals`、`get_ecg_records`、`get_run_level`（带 `includeHistory`）、`get_running_dynamics`、`get_official_splits`。
 
 - 这些是 **host 侧代理调用**，不进入模型上下文、不消耗 token，也不影响对话。
-- 10 个调用并发执行，每个工具单独容错，失败只落到「部分数据不可用」。
+- 27 个调用并发执行，每个工具单独容错，失败只落到「部分数据不可用」；某个健康工具在旧版本服务上不存在时，只让对应面板显示空态。
 - `cacheTtlMs`（默认 10 s）内重复打开走缓存，只有 `?refresh=1` 或点「刷新」才清缓存。
+- 单次跑步才有的工具（分段、轨迹、海拔、停留、单次跑姿/summaryData/streams）仍走 `/sport-health/api/run?id=...`，不进 overview。
 - 想进一步降噪：调大 `cacheTtlMs`，或把 `Dashboard.vue` 拆成按区块懒加载。
+
+### 三个容易误读的健康面板口径
+
+- **睡眠 / HRV 缺数据≠0**：华为报告从 2026-06-13 起才有 score/efficiency/hrv，之前只有分期。面板顶部会显示覆盖率说明，别把空值当成 0 去比较。
+- **体成分是多用户数据**：默认不带 `gender` + `heightCm`，服务端返回配置清单并明确提示「不能合并统计」。看板照原样展示这条警示，不替用户猜哪台秤是本人。
+- **HRV 两套口径**：`get_daily_vitals` 是日历日全天均值，`get_hrv_trend` 是睡眠窗口均值，同一天数值会不同，不要互相校验。周报区间若落在最新数据之后，步数/睡眠/跑步都会是 0，这是数据空窗而不是接口错误。
 
 ### 三个看板数据的口径
 

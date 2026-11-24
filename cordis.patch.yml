@@ -14,12 +14,12 @@
       config:
         serverName: sport_health
         transport: streamable-http
-        url: http://127.0.0.1:8080/mcp
+        url: http://127.0.0.1:8098/mcp
         failOnStartupError: false
         toolCallTimeoutMs: 60000
     - id: sport-health
       name: dsh-sport-health
       config:
-        url: http://127.0.0.1:8080/mcp
+        url: http://127.0.0.1:8098/mcp
         timeoutMs: 10000
         cacheTtlMs: 10000

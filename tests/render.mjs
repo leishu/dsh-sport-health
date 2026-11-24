@@ -392,7 +392,11 @@ await check('dashboard renders trend, race predictions and weather', async () =>
   if (!html.includes('周跑量趋势')) throw new Error('trend panel title missing')
   // 夹具里最后一个完整周是 10-26 ~ 11-01，22.89 km。
   if (!html.includes('22.9')) throw new Error('trend panel did not render the last complete week')
-  if (!html.includes('本周进行中')) throw new Error('ongoing-week note missing — partial week must be called out')
+  // 夹具是历史快照：只有「今天」仍落在最后一周内时才该出现进行中提示。
+  // 这个断言不能写死，否则时间一过就误报（看板行为本身没变）。
+  const today = new Date().toISOString().slice(0, 10)
+  const hasOngoing = (overview.trend?.periods ?? []).some(p => (p.runCount ?? 0) > 0 && (p.to ?? '') >= today)
+  if (hasOngoing && !html.includes('本周进行中')) throw new Error('ongoing-week note missing — partial week must be called out')
 
   if (!html.includes('比赛成绩预测')) throw new Error('race prediction panel title missing')
   for (const label of ['5K', '10K', '半马', '全马']) {
@@ -404,6 +408,53 @@ await check('dashboard renders trend, race predictions and weather', async () =>
   if (!html.includes('秒/km')) throw new Error('weather panel did not render pace deltas')
 
   view.destroy()
+})
+
+await check('dashboard renders health panels from the Huawei tools', async () => {
+  // 新增的健康面板必须真的把数据接上，而不是只挂个标题。断言标题 + 夹具里的
+  // 真实数值，面板空着或数据段没接到都会失败。
+  const view = renderReact(dashboard, {})
+  await flush()
+  const html = view.element.innerHTML
+  for (const title of [
+    '恢复状态', '睡眠概览', '睡眠趋势', '每日体征', 'HRV 趋势', '压力曲线', '血氧',
+    '日常活动', '当天活动', '心率曲线', '体成分', '周健康报告',
+    '华为跑力', '跑姿', '官方分段', '体育勋章', 'ECG 记录',
+  ]) {
+    if (!html.includes(title)) throw new Error(`health panel missing: ${title}`)
+  }
+  // 华为跑力 45.9226 → 45.9；恢复状态里的睡眠评分 80。
+  if (!html.includes('45.9')) throw new Error('run level value missing')
+  if (!html.includes('80')) throw new Error('recovery sleep score missing')
+  view.destroy()
+})
+
+await check('ongoing week is called out when present', async () => {
+  // 构造一个仍在进行中的周，验证「不进环比、但要说明」这条规则与系统日期无关。
+  const today = new Date()
+  const to = new Date(today.getTime() + 3 * 86400000).toISOString().slice(0, 10)
+  const from = new Date(today.getTime() - 3 * 86400000).toISOString().slice(0, 10)
+  const shifted = {
+    ...overview,
+    trend: {
+      ...overview.trend,
+      periods: [
+        ...overview.trend.periods,
+        { from, to, runCount: 1, distanceKm: 5.5, paceText: "5'30\"/km" },
+      ],
+    },
+  }
+  serveOverview(shifted)
+  try {
+    const view = renderReact(dashboard, {})
+    await flush()
+    const html = view.element.innerHTML
+    if (!html.includes('本周进行中')) throw new Error('ongoing-week note missing')
+    if (!html.includes('5.5')) throw new Error('ongoing week distance missing')
+    view.destroy()
+  } finally {
+    serveOverview(overview)
+  }
 })
 
 /**

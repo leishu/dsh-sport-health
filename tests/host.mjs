@@ -180,6 +180,31 @@ await check('overview carries the weekly trend and race predictions', async () =
   assert.ok(Array.isArray(body.weather.temperatureBuckets), 'weather.temperatureBuckets must be an array')
 })
 
+await check('overview assembles every health section', async () => {
+  // 健康面板靠这些 section 拿数据；只挂标题不接数据段的话前端会空着嘴通过。
+  const { body } = await get('/sport-health/api/overview')
+  const sections = {
+    sleepSummary: 'nights', sleepTrend: 'points', recovery: 'latestSleep',
+    vitals: 'days', hrv: 'periods', stress: 'buckets', bloodOxygen: 'daily',
+    activity: 'days', activityMinutes: 'summary', heartRate: 'buckets',
+    bodyComposition: 'configs', weeklyReport: 'text', medals: 'rows',
+    ecg: 'rows', runLevel: 'zones', dynamics: 'segments', officialSplits: 'units',
+  }
+  for (const [key, field] of Object.entries(sections)) {
+    assert.ok(body[key], `${key} section missing`)
+    assert.ok(body[key][field] !== undefined, `${key}.${field} missing`)
+  }
+  for (const name of [
+    'get_sleep_summary', 'get_sleep_trend', 'get_recovery_status', 'get_daily_vitals',
+    'get_hrv_trend', 'get_stress_series', 'get_blood_oxygen', 'get_daily_activity',
+    'get_activity_minutes', 'get_heart_rate_series', 'get_body_composition',
+    'get_weekly_health_report', 'get_medals', 'get_ecg_records', 'get_run_level',
+    'get_running_dynamics', 'get_official_splits',
+  ]) {
+    assert.ok(calls.some(call => call.name === name), `${name} was not called by overview`)
+  }
+})
+
 await check('overview asks the trend for weekly buckets', async () => {
   await get('/sport-health/api/overview')
   const trendCall = calls.filter(call => call.name === 'get_training_trend').at(-1)
